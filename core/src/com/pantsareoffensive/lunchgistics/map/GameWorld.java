@@ -4,11 +4,10 @@ public class GameWorld {
     private static GameWorld INSTANCE = null;
     public static GameWorld get() { return INSTANCE; }
 
-    public GameMap map;
+   // public GameMap map;
 
 
-    public GameWorld(GameMap map) {
-        this.map = map;
+    public GameWorld() {
 
     }
 

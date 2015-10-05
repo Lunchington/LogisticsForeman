@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
-import com.pantsareoffensive.lunchgistics.map.GameMap;
 import com.pantsareoffensive.lunchgistics.map.GameWorld;
 
 
@@ -27,7 +26,7 @@ public class GamePlayScreen implements Screen {
         gamePlayArea = new Stage(new ScreenViewport());
         engine = new Engine();
 
-        GameWorld gworld = new GameWorld(new GameMap());
+        GameWorld gworld = new GameWorld();
         GameWorld.init(gworld);
 
     }
