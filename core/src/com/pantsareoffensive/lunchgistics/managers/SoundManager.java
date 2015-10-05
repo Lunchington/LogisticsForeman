@@ -1,11 +1,11 @@
-package com.pantsareoffensive.lunchgistics.systems;
+package com.pantsareoffensive.lunchgistics.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Disposable;
-import com.pantsareoffensive.lunchgistics.Application;
-import com.pantsareoffensive.lunchgistics.systems.SoundManager.GameSound;
+import com.pantsareoffensive.lunchgistics.LogisticsForeman;
+import com.pantsareoffensive.lunchgistics.managers.SoundManager.GameSound;
 import com.pantsareoffensive.lunchgistics.utils.LRUCache;
 import com.pantsareoffensive.lunchgistics.utils.LRUCache.CacheEntryRemovedListener;
 
@@ -18,7 +18,7 @@ public class SoundManager implements CacheEntryRemovedListener<GameSound, Sound>
 
         private final String fileName;
 
-        private GameSound(String fileName) {
+        GameSound(String fileName) {
             this.fileName = fileName;
         }
 
@@ -65,8 +65,6 @@ public class SoundManager implements CacheEntryRemovedListener<GameSound, Sound>
             soundCache.add(sound, soundToPlay);
         }
 
-        // play the sound
-        Gdx.app.log(Application.LOG, "Playing sound: " + sound.name());
         soundToPlay.play(volume);
     }
 
@@ -74,9 +72,7 @@ public class SoundManager implements CacheEntryRemovedListener<GameSound, Sound>
      * Sets the sound volume which must be inside the range [0,1].
      */
     public void setVolume(float volume) {
-        Gdx.app.log(Application.LOG, "Adjusting sound volume to: " + volume);
 
-        // check and set the new volume
         if (volume < 0 || volume > 1f) { throw new IllegalArgumentException("The volume must be inside the range: [0,1]"); }
         this.volume = volume;
     }
@@ -92,7 +88,6 @@ public class SoundManager implements CacheEntryRemovedListener<GameSound, Sound>
 
     @Override
     public void notifyEntryRemoved(GameSound key, Sound value) {
-        Gdx.app.log(Application.LOG, "Disposing sound: " + key.name());
         value.dispose();
     }
 
@@ -100,7 +95,6 @@ public class SoundManager implements CacheEntryRemovedListener<GameSound, Sound>
      * Disposes the sound manager.
      */
     public void dispose() {
-        Gdx.app.log(Application.LOG, "Disposing sound manager");
         for (Sound sound : soundCache.retrieveAll()) {
             sound.stop();
             sound.dispose();

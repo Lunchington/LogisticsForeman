@@ -1,10 +1,10 @@
-package com.pantsareoffensive.lunchgistics.systems;
+package com.pantsareoffensive.lunchgistics.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Disposable;
-import com.pantsareoffensive.lunchgistics.Application;
+import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 
 public class MusicManager implements Disposable {
     private GameMusic musicBeingPlayed;
@@ -12,8 +12,8 @@ public class MusicManager implements Disposable {
     private boolean enabled = true;
 
     public enum GameMusic {
-        MENU("sounds/title_IswearIsawit.ogg"),
-        LEVEL("sounds/title_IswearIsawit.ogg");
+        MENU("sounds/menuLoop.mp3"),
+        GAME("sounds/gameLoop.mp3");
 
         private String fileName;
         private Music musicResource;
@@ -42,7 +42,6 @@ public class MusicManager implements Disposable {
 
         if (musicBeingPlayed == music) return;
 
-        Gdx.app.log(Application.LOG, "Playing Music: " + music.name());
 
         stop();
 
@@ -62,7 +61,6 @@ public class MusicManager implements Disposable {
      */
     public void stop() {
         if (musicBeingPlayed != null) {
-            Gdx.app.log(Application.LOG, "Stopping current music");
             Music musicResource = musicBeingPlayed.getMusicResource();
             musicResource.stop();
             musicResource.dispose();
@@ -71,7 +69,6 @@ public class MusicManager implements Disposable {
     }
 
     public void setVolume(float volume) {
-        Gdx.app.log(Application.LOG, "Adjusting music volume to: " + volume);
 
         // check and set the new volume
         if (volume < 0 || volume > 1f) { throw new IllegalArgumentException("The volume must be inside the range: [0,1]"); }
@@ -94,7 +91,6 @@ public class MusicManager implements Disposable {
 
     @Override
     public void dispose() {
-        Gdx.app.log(Application.LOG, "Disposing music manager");
         stop();
     }
 

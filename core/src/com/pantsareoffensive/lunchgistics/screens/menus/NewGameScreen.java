@@ -1,26 +1,51 @@
 package com.pantsareoffensive.lunchgistics.screens.menus;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.pantsareoffensive.lunchgistics.Application;
-import com.pantsareoffensive.lunchgistics.gui.DefaultInputListener;
-import com.pantsareoffensive.lunchgistics.systems.SoundManager.GameSound;
+import com.pantsareoffensive.lunchgistics.LogisticsForeman;
+import com.pantsareoffensive.lunchgistics.managers.SoundManager.GameSound;
 
 public class NewGameScreen extends BaseMenuScreen {
 
-    public NewGameScreen(Application _game) {
-        super(_game);
-        Table table = super.getTable();
+    public NewGameScreen(LogisticsForeman app) {  super(app); }
+
+    @Override
+    public void show() {
+        super.show();
         table.defaults().spaceBottom(10).width(300).height(45);
 
-        // back to Main
-        TextButton backButton = new TextButton("Back to main menu", getSkin());
-        backButton.addListener(new DefaultInputListener() {
+
+        TextButton testButton = new TextButton("TEST WORLD", skin);
+        testButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                app.getSoundManager().play(GameSound.CLICK);
+                LogisticsForeman.soundManager.play(GameSound.CLICK);
+                app.setScreen(app.gameplayScreen);
+            }
+        });
+        table.add(testButton);
+
+        table.row();
+
+        // back to Main
+        TextButton backButton = new TextButton("Back to main menu", skin);
+        backButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                LogisticsForeman.soundManager.play(GameSound.CLICK);
                 app.setScreen(app.menuScreen);
 
             }
@@ -29,9 +54,4 @@ public class NewGameScreen extends BaseMenuScreen {
         table.add(backButton);
     }
 
-    @Override
-    public void show() {
-        super.show();
-
-    }
 }

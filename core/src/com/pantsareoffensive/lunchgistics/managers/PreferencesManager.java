@@ -1,4 +1,4 @@
-package com.pantsareoffensive.lunchgistics.systems;
+package com.pantsareoffensive.lunchgistics.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
