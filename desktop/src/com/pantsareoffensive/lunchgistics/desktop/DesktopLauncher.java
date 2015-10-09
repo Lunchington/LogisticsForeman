@@ -14,11 +14,6 @@ public class DesktopLauncher {
 		config.width = Global.WIDTH;
 		config.height = Global.HEIGHT;
 
-
-		//PackTextures.Settings settings = new PackTextures.Settings();
-		//PackTextures.process(settings, "src/tiles", "tiles", "tiles");
-		//PackTextures.process(settings, "src/gui", "gui", "gui");
-
 		new LwjglApplication(new LogisticsForeman(), config);
 	}
 }
