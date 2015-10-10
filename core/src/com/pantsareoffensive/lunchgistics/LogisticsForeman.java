@@ -52,7 +52,7 @@ public class LogisticsForeman extends Game {
 		menuScreen = new MenuScreen(this);
 		gameplayScreen = new GamePlayScreen(this);
 		newgameScreen = new NewGameScreen(this);
-		 optionsScreen = new OptionsScreen(this);
+		optionsScreen = new OptionsScreen(this);
 
 		setScreen(splashScreen);
 	}
