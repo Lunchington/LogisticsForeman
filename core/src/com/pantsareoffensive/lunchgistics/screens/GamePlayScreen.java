@@ -11,6 +11,8 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.pantsareoffensive.lunchgistics.LogisticsForeman;
+import com.pantsareoffensive.lunchgistics.controllers.GamePlayController;
+import com.pantsareoffensive.lunchgistics.controllers.HudController;
 import com.pantsareoffensive.lunchgistics.input.CameraScroll;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
 import com.pantsareoffensive.lunchgistics.map.GameWorld;
@@ -42,6 +44,8 @@ public class GamePlayScreen implements Screen {
         GameWorld.init(gworld);
 
         cameraScroll = new CameraScroll(gamePlayArea.getCamera());
+        engine.addEntityListener(HudController.init(app, hudArea));
+        engine.addEntityListener(new GamePlayController(gamePlayArea));
 
     }
 
