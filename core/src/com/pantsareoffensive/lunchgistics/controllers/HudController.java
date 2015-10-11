@@ -28,7 +28,7 @@ public class HudController implements EntityListener{
         this.stage = stage;
 
 
-        this.toolTip = new ToolTip(stage.getViewport().getScreenWidth() / 2, 60);
+        this.toolTip = new ToolTip(stage.getViewport().getScreenWidth() / 2, 0);
         stage.addActor(toolTip);
     }
     @Override

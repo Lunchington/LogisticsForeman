@@ -54,7 +54,7 @@ public class LogisticsForeman extends Game {
 		newgameScreen = new NewGameScreen(this);
 		optionsScreen = new OptionsScreen(this);
 
-		setScreen(splashScreen);
+		setScreen(gameplayScreen);
 	}
 
     @Override

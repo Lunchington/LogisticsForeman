@@ -5,17 +5,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.pantsareoffensive.lunchgistics.Global;
 import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 import com.pantsareoffensive.lunchgistics.controllers.GamePlayController;
 import com.pantsareoffensive.lunchgistics.controllers.HudController;
 import com.pantsareoffensive.lunchgistics.input.CameraScroll;
+import com.pantsareoffensive.lunchgistics.input.GameInput;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
 import com.pantsareoffensive.lunchgistics.map.GameWorld;
+
+import javax.xml.bind.annotation.XmlElementDecl;
 
 
 public class GamePlayScreen implements Screen {
@@ -33,8 +39,9 @@ public class GamePlayScreen implements Screen {
     public GamePlayScreen(LogisticsForeman app) {
         this.app = app;
 
-        hudArea = new Stage(new ScreenViewport());
-        gamePlayArea = new Stage(new ScreenViewport());
+        hudArea = new Stage(new FitViewport(Global.WIDTH, Global.HEIGHT));
+        gamePlayArea = new Stage(new FitViewport(Global.WIDTH, Global.HEIGHT));
+
         engine = new Engine();
 
         batch = new SpriteBatch();
@@ -44,6 +51,7 @@ public class GamePlayScreen implements Screen {
         GameWorld.init(gworld);
 
         cameraScroll = new CameraScroll(gamePlayArea.getCamera());
+
         engine.addEntityListener(HudController.init(app, hudArea));
         engine.addEntityListener(new GamePlayController(gamePlayArea));
 
@@ -52,7 +60,7 @@ public class GamePlayScreen implements Screen {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(new InputMultiplexer(gamePlayArea, cameraScroll));
+        Gdx.input.setInputProcessor(new InputMultiplexer(gamePlayArea, cameraScroll,new GameInput(gamePlayArea),hudArea));
 
         if(LogisticsForeman.preferencesManager.isMusicEnabled())
             LogisticsForeman.musicManager.play(MusicManager.GameMusic.GAME);
@@ -77,7 +85,8 @@ public class GamePlayScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        gamePlayArea.getViewport().update(width,height,false);
+        hudArea.getViewport().update(width,height,false);
     }
 
     @Override
