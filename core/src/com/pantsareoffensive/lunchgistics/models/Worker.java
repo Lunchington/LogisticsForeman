@@ -1,33 +1,38 @@
 package com.pantsareoffensive.lunchgistics.models;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.pantsareoffensive.lunchgistics.Global;
 
-public class Worker extends Actor {
-    private Texture texture;
+public class Worker extends Group {
+    public TextureAtlas atlas;
 
-    public Worker (Vector2 position) {
-        setSize(32,32);
+    private BodyPart head;
+    private BodyPart body;
+
+    public Vector2 previous;
+
+
+    public Worker (TextureAtlas atlas, Vector2 position) {
+        setSize(32, 32);
         setPosition(position.x, position.y, Align.center);
+        this.atlas = atlas;
 
-        this.texture = Global.Art.worker;
+        this.head = new BodyPart(this,"head");
+        this.body = new BodyPart(this,"body");
+        addActor(this.body);
+        addActor(this.head);
+
+        addAction(Actions.moveTo(MathUtils.random(0,Global.WIDTH), MathUtils.random(0,Global.HEIGHT), 10));
     }
 
     @Override
     public void act(float delta) {
-        setPosition(getX() + MathUtils.random(-1,1), getY() + MathUtils.random(-1,1));
-
-    }
-
-
-    @Override
-    public void draw(Batch batch, float alpha) {
-        batch.draw(texture, getX(), getY(), getWidth(), getHeight());
-
+        previous = new Vector2(getX(),getY());
+        super.act(delta);
     }
 }

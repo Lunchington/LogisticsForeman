@@ -4,9 +4,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.pantsareoffensive.lunchgistics.Global;
 import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 import com.pantsareoffensive.lunchgistics.models.Worker;
-
 
 public class GameInput extends InputAdapter {
     private Stage stage;
@@ -24,7 +24,7 @@ public class GameInput extends InputAdapter {
 
             Vector2 position = new Vector2(screenX, screenY);
             stage.screenToStageCoordinates(position);
-            stage.addActor(new Worker(position));
+            stage.addActor(new Worker(Global.Art.WORKER_ATLAS,position));
             return true;
         }
 
@@ -36,9 +36,17 @@ public class GameInput extends InputAdapter {
         switch (key) {
             case Input.Keys.ESCAPE:
                 app.setScreen(app.menuScreen);
+                return true;
             default:
                 return false;
         }
     }
 
+    @Override
+    public boolean keyDown(int key) {
+        switch (key) {
+            default:
+                return false;
+        }
+    }
 }

@@ -29,6 +29,7 @@ public class GamePlayScreen implements Screen {
 
     public GamePlayScreen(LogisticsForeman app) {
         this.app = app;
+        Global.Art.init();
 
         hudArea = new Stage(new FitViewport(Global.WIDTH, Global.HEIGHT));
         gamePlayArea = new Stage(new FitViewport(Global.WIDTH, Global.HEIGHT));
@@ -64,7 +65,7 @@ public class GamePlayScreen implements Screen {
 
         engine.update(delta);
 
-        gamePlayArea.act();
+        gamePlayArea.act(delta);
         hudArea.draw();
 
         gamePlayArea.draw();
@@ -99,6 +100,7 @@ public class GamePlayScreen implements Screen {
         LogisticsForeman.running = false;
         gamePlayArea.dispose();
         hudArea.dispose();
+        Global.Art.dispose();
 
     }
 
