@@ -29,6 +29,8 @@ public class LogisticsForeman extends Game {
 	public OptionsScreen optionsScreen;
 	public NewGameScreen newgameScreen;
 
+    public static boolean running = false;
+
 	private FPSLogger fpsLogger;
 
 	public LogisticsForeman() {}
@@ -50,11 +52,11 @@ public class LogisticsForeman extends Game {
 
 		splashScreen = new SplashScreen(this);
 		menuScreen = new MenuScreen(this);
-		gameplayScreen = new GamePlayScreen(this);
 		newgameScreen = new NewGameScreen(this);
 		optionsScreen = new OptionsScreen(this);
 
-		setScreen(gameplayScreen);
+
+		setScreen(menuScreen);
 	}
 
     @Override

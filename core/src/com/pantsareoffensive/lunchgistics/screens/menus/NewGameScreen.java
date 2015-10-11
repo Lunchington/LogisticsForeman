@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 import com.pantsareoffensive.lunchgistics.managers.SoundManager.GameSound;
+import com.pantsareoffensive.lunchgistics.screens.GamePlayScreen;
 
 public class NewGameScreen extends BaseMenuScreen {
 
@@ -16,9 +17,8 @@ public class NewGameScreen extends BaseMenuScreen {
         super.show();
         table.defaults().spaceBottom(10).width(300).height(45);
 
-
-        TextButton testButton = new TextButton("TEST WORLD", skin);
-        testButton.addListener(new InputListener() {
+        TextButton newWorld = new TextButton("New World", skin);
+        newWorld.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -28,10 +28,12 @@ public class NewGameScreen extends BaseMenuScreen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
                 LogisticsForeman.soundManager.play(GameSound.CLICK);
+
+                app.gameplayScreen = new GamePlayScreen(app);
                 app.setScreen(app.gameplayScreen);
             }
         });
-        table.add(testButton);
+        table.add(newWorld);
 
         table.row();
 

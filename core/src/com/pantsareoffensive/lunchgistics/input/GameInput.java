@@ -4,14 +4,20 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 import com.pantsareoffensive.lunchgistics.models.Worker;
 
 
 public class GameInput extends InputAdapter {
-    Stage stage;
+    private Stage stage;
+    private LogisticsForeman app;
 
 
-    public GameInput(Stage stage) { this.stage = stage; }
+    public GameInput(LogisticsForeman app, Stage stage) {
+        this.stage = stage;
+        this.app = app;
+    }
+
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if (Input.Buttons.MIDDLE == button) {
@@ -21,6 +27,18 @@ public class GameInput extends InputAdapter {
             stage.addActor(new Worker(position));
             return true;
         }
+
         return false;
     }
+
+    @Override
+    public boolean keyUp(int key) {
+        switch (key) {
+            case Input.Keys.ESCAPE:
+                app.setScreen(app.menuScreen);
+            default:
+                return false;
+        }
+    }
+
 }

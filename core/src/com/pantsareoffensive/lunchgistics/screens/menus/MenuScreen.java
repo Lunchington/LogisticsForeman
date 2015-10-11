@@ -22,6 +22,25 @@ public class MenuScreen extends BaseMenuScreen {
         super.show();
         table.defaults().spaceBottom(10).width(300).height(45);
 
+        if (LogisticsForeman.running) {
+            TextButton testButton = new TextButton("Return to game", skin);
+            testButton.addListener(new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    return true;
+                }
+
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    super.touchUp(event, x, y, pointer, button);
+                    LogisticsForeman.soundManager.play(GameSound.CLICK);
+                    app.setScreen(app.gameplayScreen);
+                }
+            });
+            table.add(testButton);
+            table.row();
+        }
+
         TextButton newGameButton = new TextButton("New game", skin);
         newGameButton.addListener(new InputListener() {
 
@@ -37,7 +56,7 @@ public class MenuScreen extends BaseMenuScreen {
 
             }
         });
-        table.add(newGameButton).padTop(50);
+        table.add(newGameButton);
         table.row();
 
         TextButton loadGameButton = new TextButton("Load Game", skin);

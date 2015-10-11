@@ -5,13 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.pantsareoffensive.lunchgistics.Global;
 import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 import com.pantsareoffensive.lunchgistics.controllers.GamePlayController;
@@ -21,7 +16,6 @@ import com.pantsareoffensive.lunchgistics.input.GameInput;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
 import com.pantsareoffensive.lunchgistics.map.GameWorld;
 
-import javax.xml.bind.annotation.XmlElementDecl;
 
 
 public class GamePlayScreen implements Screen {
@@ -33,9 +27,6 @@ public class GamePlayScreen implements Screen {
 
     private CameraScroll cameraScroll;
 
-    private SpriteBatch batch;
-    private BitmapFont font;
-
     public GamePlayScreen(LogisticsForeman app) {
         this.app = app;
 
@@ -44,8 +35,6 @@ public class GamePlayScreen implements Screen {
 
         engine = new Engine();
 
-        batch = new SpriteBatch();
-        font = new BitmapFont();
 
         GameWorld gworld = new GameWorld();
         GameWorld.init(gworld);
@@ -54,13 +43,14 @@ public class GamePlayScreen implements Screen {
 
         engine.addEntityListener(HudController.init(app, hudArea));
         engine.addEntityListener(new GamePlayController(gamePlayArea));
+        LogisticsForeman.running = true;
 
     }
 
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(new InputMultiplexer(gamePlayArea, cameraScroll,new GameInput(gamePlayArea),hudArea));
+        Gdx.input.setInputProcessor(new InputMultiplexer(gamePlayArea, cameraScroll,new GameInput(app,gamePlayArea),hudArea));
 
         if(LogisticsForeman.preferencesManager.isMusicEnabled())
             LogisticsForeman.musicManager.play(MusicManager.GameMusic.GAME);
@@ -106,6 +96,9 @@ public class GamePlayScreen implements Screen {
 
     @Override
     public void dispose() {
+        LogisticsForeman.running = false;
+        gamePlayArea.dispose();
+        hudArea.dispose();
 
     }
 
