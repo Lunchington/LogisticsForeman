@@ -1,4 +1,4 @@
-package com.pantsareoffensive.lunchgistics.ECS.components;
+package com.pantsareoffensive.lunchgistics.model.components;
 
 import com.badlogic.ashley.core.Component;
 

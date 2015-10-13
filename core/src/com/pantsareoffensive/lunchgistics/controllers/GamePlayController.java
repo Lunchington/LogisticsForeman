@@ -10,7 +10,6 @@ public class GamePlayController implements EntityListener{
 
     public GamePlayController (Stage stage) { this.stage = stage;
 
-        stage.addActor(new ToolTip(stage.getViewport().getScreenWidth() / 2, 60));
     }
 
 

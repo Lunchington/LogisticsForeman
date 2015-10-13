@@ -26,6 +26,7 @@ public class GamePlayScreen implements Screen {
     private Engine engine;
 
     private CameraScroll cameraScroll;
+    private GameInput gameInput;
 
     public GamePlayScreen(LogisticsForeman app) {
         this.app = app;
@@ -41,6 +42,7 @@ public class GamePlayScreen implements Screen {
         GameWorld.init(gworld);
 
         cameraScroll = new CameraScroll(gamePlayArea.getCamera());
+        gameInput = new GameInput(app,gamePlayArea);
 
         engine.addEntityListener(HudController.init(app, hudArea));
         engine.addEntityListener(new GamePlayController(gamePlayArea));
@@ -51,7 +53,7 @@ public class GamePlayScreen implements Screen {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(new InputMultiplexer(gamePlayArea, cameraScroll,new GameInput(app,gamePlayArea),hudArea));
+        Gdx.input.setInputProcessor(new InputMultiplexer(gamePlayArea, cameraScroll,gameInput,hudArea));
 
         if(LogisticsForeman.preferencesManager.isMusicEnabled())
             LogisticsForeman.musicManager.play(MusicManager.GameMusic.GAME);
@@ -76,8 +78,8 @@ public class GamePlayScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        gamePlayArea.getViewport().update(width,height,false);
-        hudArea.getViewport().update(width,height,false);
+        gamePlayArea.getViewport().update(width, height, false);
+        hudArea.getViewport().update(width, height, false);
     }
 
     @Override
@@ -102,6 +104,10 @@ public class GamePlayScreen implements Screen {
         hudArea.dispose();
         Global.Art.dispose();
 
+    }
+
+    public Engine getEngine() {
+        return engine;
     }
 
 }

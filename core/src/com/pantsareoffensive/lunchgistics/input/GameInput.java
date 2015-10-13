@@ -6,12 +6,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.pantsareoffensive.lunchgistics.Global;
 import com.pantsareoffensive.lunchgistics.LogisticsForeman;
-import com.pantsareoffensive.lunchgistics.models.Worker;
+import com.pantsareoffensive.lunchgistics.view.WorkerActor;
 
 public class GameInput extends InputAdapter {
     private Stage stage;
     private LogisticsForeman app;
-
 
     public GameInput(LogisticsForeman app, Stage stage) {
         this.stage = stage;
@@ -24,7 +23,10 @@ public class GameInput extends InputAdapter {
 
             Vector2 position = new Vector2(screenX, screenY);
             stage.screenToStageCoordinates(position);
-            stage.addActor(new Worker(Global.Art.WORKER_ATLAS,position));
+
+            WorkerActor w = new WorkerActor(Global.Art.WORKER_ATLAS,position);
+            stage.addActor(w);
+            app.gameplayScreen.getEngine().addEntity(w.getWorker());
             return true;
         }
 

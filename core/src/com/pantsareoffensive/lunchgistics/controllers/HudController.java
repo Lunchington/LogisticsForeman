@@ -7,14 +7,15 @@ import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 
 
 public class HudController implements EntityListener{
-    private LogisticsForeman game;
+    private LogisticsForeman app;
     private Stage stage;
     private ToolTip toolTip;
+    public int count = 0;
 
     private static HudController INSTANCE = null;
 
-    public static HudController init(LogisticsForeman game, Stage stage) {
-        HudController hudCont = new HudController(game, stage);
+    public static HudController init(LogisticsForeman app, Stage stage) {
+        HudController hudCont = new HudController(app, stage);
         INSTANCE = hudCont;
         return hudCont;
     }
@@ -23,8 +24,8 @@ public class HudController implements EntityListener{
         return INSTANCE;
     }
 
-    public HudController (LogisticsForeman game, Stage stage) {
-        this.game = game;
+    public HudController (LogisticsForeman app, Stage stage) {
+        this.app = app;
         this.stage = stage;
 
 
@@ -33,11 +34,17 @@ public class HudController implements EntityListener{
     }
     @Override
     public void entityAdded(Entity entity) {
-
+        count++;
+        setToolTip("TESTIES: " + count );
     }
 
     @Override
     public void entityRemoved(Entity entity) {
 
     }
+
+    public void setToolTip(String text) {
+        toolTip.setText(text);
+    }
+
 }

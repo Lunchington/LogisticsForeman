@@ -7,10 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class CameraScroll extends InputAdapter{
     private Camera camera;
-
     private Vector2 move = new Vector2(0,0);
-
-
     private float scrollSpeed = 8f;
 
     public CameraScroll(Camera camera) { this.camera = camera; }
