@@ -34,7 +34,6 @@ public class WorkerActor extends Group {
         addActor(this.body);
         addActor(this.head);
 
-        addAction(Actions.moveTo(MathUtils.random(0,Global.WIDTH*2), MathUtils.random(0,Global.HEIGHT*2), 10));
     }
 
     @Override

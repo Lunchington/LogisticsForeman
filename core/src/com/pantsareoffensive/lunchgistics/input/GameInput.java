@@ -26,7 +26,7 @@ public class GameInput extends InputAdapter {
 
             WorkerActor w = new WorkerActor(Global.Art.WORKER_ATLAS,position);
             stage.addActor(w);
-            app.gameplayScreen.getEngine().addEntity(w.getWorker());
+            app.gameplayScreen.addtoEngine(w.getWorker());
             return true;
         }
 

@@ -1,6 +1,7 @@
 package com.pantsareoffensive.lunchgistics.screens;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -21,6 +22,8 @@ import com.pantsareoffensive.lunchgistics.map.GameWorld;
 public class GamePlayScreen implements Screen {
     private LogisticsForeman app;
 
+    private GameWorld world;
+
     private Stage hudArea;
     private Stage gamePlayArea;
     private Engine engine;
@@ -38,13 +41,12 @@ public class GamePlayScreen implements Screen {
         engine = new Engine();
 
 
-        GameWorld gworld = new GameWorld();
-        GameWorld.init(gworld);
+        world = new GameWorld();
 
         cameraScroll = new CameraScroll(gamePlayArea.getCamera());
         gameInput = new GameInput(app,gamePlayArea);
 
-        engine.addEntityListener(HudController.init(app, hudArea));
+        engine.addEntityListener(HudController.init(hudArea));
         engine.addEntityListener(new GamePlayController(gamePlayArea));
         LogisticsForeman.running = true;
 
@@ -106,8 +108,8 @@ public class GamePlayScreen implements Screen {
 
     }
 
-    public Engine getEngine() {
-        return engine;
+    public void addtoEngine(Entity e) {
+        engine.addEntity(e);
     }
 
 }
