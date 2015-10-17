@@ -57,8 +57,8 @@ public class GamePlayScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(new InputMultiplexer(gamePlayArea, cameraScroll,gameInput,hudArea));
 
-        if(LogisticsForeman.preferencesManager.isMusicEnabled())
-            LogisticsForeman.musicManager.play(MusicManager.GameMusic.GAME);
+        if(app.preferencesManager.isMusicEnabled())
+            app.musicManager.play(MusicManager.GameMusic.GAME);
     }
 
     @Override

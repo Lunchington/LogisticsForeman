@@ -9,12 +9,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.pantsareoffensive.lunchgistics.LogisticsForeman;
-import com.pantsareoffensive.lunchgistics.screens.menus.MenuScreen;
 
 public class SplashScreen implements Screen {
     private LogisticsForeman app;

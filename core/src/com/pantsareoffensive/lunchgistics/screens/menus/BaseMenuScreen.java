@@ -36,8 +36,8 @@ public class BaseMenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         Drawable splashDrawable =  new Image(new Texture(Gdx.files.internal("logo.png"))).getDrawable();
         table.setBackground(splashDrawable);
-        if (LogisticsForeman.preferencesManager.isMusicEnabled()) {
-            LogisticsForeman.musicManager.play(MusicManager.GameMusic.MENU);
+        if (app.preferencesManager.isMusicEnabled()) {
+            app.musicManager.play(MusicManager.GameMusic.MENU);
         }
 
     }

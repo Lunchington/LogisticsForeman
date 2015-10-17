@@ -15,12 +15,11 @@ import com.pantsareoffensive.lunchgistics.utils.RandomNames;
 
 public class LogisticsForeman extends Game {
 	public static boolean DEV_MODE = false;
-
 	public static RandomNames randomNames;
 
-	public static PreferencesManager preferencesManager;
-	public static MusicManager musicManager;
-	public static SoundManager soundManager;
+	public PreferencesManager preferencesManager;
+	public MusicManager musicManager;
+	public SoundManager soundManager;
 
 	public GamePlayScreen gameplayScreen;
 	public SplashScreen splashScreen;
@@ -67,14 +66,19 @@ public class LogisticsForeman extends Game {
 
 		splashScreen.dispose();
 		menuScreen.dispose();
-		gameplayScreen.dispose();
+
 		newgameScreen.dispose();
 		optionsScreen.dispose();
+
+		if (gameplayScreen != null)
+			gameplayScreen.dispose();
 	}
 
 	public static void toggleDevMode() {
 		DEV_MODE = !DEV_MODE;
 	}
+
+
 
 
 }

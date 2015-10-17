@@ -1,10 +1,7 @@
 package com.pantsareoffensive.lunchgistics.screens.menus;
 
-import java.util.Locale;
-
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
@@ -35,26 +32,26 @@ public class OptionsScreen extends BaseMenuScreen {
         // Sound Check Box
         final CheckBox soundEffectsCheckbox = new CheckBox("", skin);
 
-        soundEffectsCheckbox.setChecked(LogisticsForeman.preferencesManager.isSoundEnabled());
+        soundEffectsCheckbox.setChecked(app.preferencesManager.isSoundEnabled());
         soundEffectsCheckbox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 boolean enabled = soundEffectsCheckbox.isChecked();
-                LogisticsForeman.preferencesManager.setSoundEnabled(enabled);
-                LogisticsForeman.soundManager.setEnabled(enabled);
-                LogisticsForeman.soundManager.play(GameSound.CLICK);
+                app.preferencesManager.setSoundEnabled(enabled);
+                app.soundManager.setEnabled(enabled);
+                app.soundManager.play(GameSound.CLICK);
             }
         });
 
         // Sound Slider
         Slider soundVolumeSlider = new Slider(0f, 1f, 0.1f, false, skin);
-        soundVolumeSlider.setValue(LogisticsForeman.preferencesManager.getSoundVolume());
+        soundVolumeSlider.setValue(app.preferencesManager.getSoundVolume());
         soundVolumeSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 float value = ((Slider) actor).getValue();
-                LogisticsForeman.preferencesManager.setSoundVolume(value);
-                LogisticsForeman.soundManager.setVolume(value);
+                app.preferencesManager.setSoundVolume(value);
+                app.soundManager.setVolume(value);
                 updateSoundVolumeLabel();
             }
 
@@ -71,29 +68,29 @@ public class OptionsScreen extends BaseMenuScreen {
 
         // Music Check Box
         final CheckBox musicCheckbox = new CheckBox("", skin);
-        musicCheckbox.setChecked(LogisticsForeman.preferencesManager.isMusicEnabled());
+        musicCheckbox.setChecked(app.preferencesManager.isMusicEnabled());
         musicCheckbox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 boolean enabled = musicCheckbox.isChecked();
-                LogisticsForeman.preferencesManager.setMusicEnabled(enabled);
-                LogisticsForeman.musicManager.setEnabled(enabled);
-                LogisticsForeman.soundManager.play(GameSound.CLICK);
+                app.preferencesManager.setMusicEnabled(enabled);
+                app.musicManager.setEnabled(enabled);
+                app.soundManager.play(GameSound.CLICK);
 
                 // if the music is now enabled, start playing the menu music
-                if (enabled) LogisticsForeman.musicManager.play(GameMusic.MENU);
+                if (enabled)app.musicManager.play(GameMusic.MENU);
             }
         });
 
         // Music Slider
         Slider musicVolumeSlider = new Slider(0f, 1f, 0.1f, false, skin);
-        musicVolumeSlider.setValue(LogisticsForeman.preferencesManager.getMusicVolume());
+        musicVolumeSlider.setValue(app.preferencesManager.getMusicVolume());
         musicVolumeSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 float value = ((Slider) actor).getValue();
-                LogisticsForeman.preferencesManager.setMusicVolume(value);
-                LogisticsForeman.musicManager.setVolume(value);
+                app.preferencesManager.setMusicVolume(value);
+                app.musicManager.setVolume(value);
                 updateMusicVolumeLabel();
             }
 
@@ -110,15 +107,10 @@ public class OptionsScreen extends BaseMenuScreen {
 
         // back to Main
         TextButton backButton = new TextButton("Back to main menu", skin);
-        backButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
+        backButton.addListener(new MenuButton(app) {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                LogisticsForeman.soundManager.play(GameSound.CLICK);
                 app.setScreen(app.menuScreen);
 
             }
@@ -129,12 +121,12 @@ public class OptionsScreen extends BaseMenuScreen {
 
 
     private void updateMusicVolumeLabel() {
-        float volume = (LogisticsForeman.preferencesManager.getMusicVolume() * 100);
-        musicVolumeValue.setText(String.format(Locale.US, "%1.0f%%", volume));
+        float volume = (app.preferencesManager.getMusicVolume() * 100);
+        musicVolumeValue.setText(String.format("%1.0f%%", volume));
     }
 
     private void updateSoundVolumeLabel() {
-        float volume = (LogisticsForeman.preferencesManager.getSoundVolume() * 100);
-        soundVolumeValue.setText(String.format(Locale.US, "%1.0f%%", volume));
+        float volume = (app.preferencesManager.getSoundVolume() * 100);
+        soundVolumeValue.setText(String.format("%1.0f%%", volume));
     }
 }
