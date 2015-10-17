@@ -1,17 +1,21 @@
 package com.pantsareoffensive.lunchgistics.view;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 import com.pantsareoffensive.lunchgistics.model.Worker;
-import com.pantsareoffensive.lunchgistics.Global;
+import com.pantsareoffensive.lunchgistics.utils.RandomNames;
 
 public class WorkerActor extends Group {
     public TextureAtlas atlas;
+    private String name;
 
     private BodyPart head;
     private BodyPart body;
@@ -28,12 +32,31 @@ public class WorkerActor extends Group {
 
         this.head = new BodyPart(this,"head");
         this.body = new BodyPart(this,"body");
+        this.name = LogisticsForeman.randomNames.getName();
 
         model = new Worker();
 
         addActor(this.body);
         addActor(this.head);
+        addListener(new ClickListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer,
+                              Actor fromActor) {
+                super.enter(event, x, y, pointer, fromActor);
+                Gdx.app.log("ButtonListener",
+                        String.format("mouseOver %f,%f,%d,%s", x, y, pointer,getName()));
 
+
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer,
+                             Actor toActor) {
+                super.exit(event, x, y, pointer, toActor);
+
+            }
+
+        });
     }
 
     @Override
@@ -49,4 +72,10 @@ public class WorkerActor extends Group {
     public Vector2 getPrevious() {
         return previous;
     }
+
+    public String getName() {
+        return name;
+    }
+
+
 }

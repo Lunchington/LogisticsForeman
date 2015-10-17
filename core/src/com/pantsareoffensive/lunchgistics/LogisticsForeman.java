@@ -1,10 +1,6 @@
 package com.pantsareoffensive.lunchgistics;
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.FPSLogger;
 
 import com.pantsareoffensive.lunchgistics.screens.GamePlayScreen;
@@ -15,9 +11,12 @@ import com.pantsareoffensive.lunchgistics.screens.menus.OptionsScreen;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
 import com.pantsareoffensive.lunchgistics.managers.PreferencesManager;
 import com.pantsareoffensive.lunchgistics.managers.SoundManager;
+import com.pantsareoffensive.lunchgistics.utils.RandomNames;
 
 public class LogisticsForeman extends Game {
 	public static boolean DEV_MODE = false;
+
+	public static RandomNames randomNames;
 
 	public static PreferencesManager preferencesManager;
 	public static MusicManager musicManager;
@@ -55,6 +54,7 @@ public class LogisticsForeman extends Game {
 		newgameScreen = new NewGameScreen(this);
 		optionsScreen = new OptionsScreen(this);
 
+		randomNames = new RandomNames();
 
 		setScreen(menuScreen);
 	}
