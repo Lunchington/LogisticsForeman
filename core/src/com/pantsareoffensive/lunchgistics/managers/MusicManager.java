@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Disposable;
-import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 
 public class MusicManager implements Disposable {
     private GameMusic musicBeingPlayed;

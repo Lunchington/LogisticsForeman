@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Disposable;
-import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 import com.pantsareoffensive.lunchgistics.managers.SoundManager.GameSound;
 import com.pantsareoffensive.lunchgistics.utils.LRUCache;
 import com.pantsareoffensive.lunchgistics.utils.LRUCache.CacheEntryRemovedListener;
