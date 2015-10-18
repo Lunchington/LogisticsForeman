@@ -1,5 +1,7 @@
 package com.pantsareoffensive.lunchgistics.desktop;
 
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.pantsareoffensive.lunchgistics.Global;
@@ -17,6 +19,10 @@ public class DesktopLauncher {
 		config.vSyncEnabled = false; // Setting to false disables vertical sync
 		config.foregroundFPS = 0; // Setting to 0 disables foreground fps throttling
 		config.backgroundFPS = 0; // Setting to 0 disables background fps throttling
+
+		config.addIcon("icon32x32.png", Files.FileType.Internal);
+		config.addIcon("icon64x64.png", Files.FileType.Internal);
+		config.addIcon("icon128x128.png", Files.FileType.Internal);
 
 		new LwjglApplication(new LogisticsForeman(), config);
 	}
