@@ -15,7 +15,6 @@ import com.pantsareoffensive.lunchgistics.utils.RandomNames;
 
 public class LogisticsForeman extends Game {
 	public static boolean DEV_MODE = false;
-	public static RandomNames randomNames;
 
 	public PreferencesManager preferencesManager;
 	public MusicManager musicManager;
@@ -53,7 +52,7 @@ public class LogisticsForeman extends Game {
 		newgameScreen = new NewGameScreen(this);
 		optionsScreen = new OptionsScreen(this);
 
-		randomNames = new RandomNames();
+		RandomNames.init();
 
 		setScreen(menuScreen);
 	}

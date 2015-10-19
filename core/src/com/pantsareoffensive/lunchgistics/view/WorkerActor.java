@@ -8,9 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 import com.pantsareoffensive.lunchgistics.controllers.HudController;
 import com.pantsareoffensive.lunchgistics.model.Worker;
+import com.pantsareoffensive.lunchgistics.utils.RandomNames;
 
 public class WorkerActor extends Group {
     public TextureAtlas atlas;
@@ -32,7 +32,7 @@ public class WorkerActor extends Group {
         this.head = new BodyPart(this,"head");
         this.body = new BodyPart(this,"body");
 
-        this.name = LogisticsForeman.randomNames.getName();
+        this.name = RandomNames.get().getName();
 
         model = new Worker();
 
