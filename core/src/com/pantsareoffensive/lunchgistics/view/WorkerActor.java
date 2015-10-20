@@ -14,7 +14,6 @@ import com.pantsareoffensive.lunchgistics.utils.RandomNames;
 
 public class WorkerActor extends Group {
     public TextureAtlas atlas;
-    private String name;
 
     private BodyPart head;
     private BodyPart body;
@@ -27,12 +26,11 @@ public class WorkerActor extends Group {
     public WorkerActor(TextureAtlas atlas, Vector2 position) {
         setSize(32, 32);
         setPosition(position.x, position.y, Align.center);
-        this.atlas = atlas;
+        setName(RandomNames.get().getName());
 
+        this.atlas = atlas;
         this.head = new BodyPart(this,"head");
         this.body = new BodyPart(this,"body");
-
-        this.name = RandomNames.get().getName();
 
         model = new Worker();
 
@@ -52,6 +50,8 @@ public class WorkerActor extends Group {
             public void exit(InputEvent event, float x, float y, int pointer,
                              Actor toActor) {
                 super.exit(event, x, y, pointer, toActor);
+                HudController.get().setToolTip("");
+
 
             }
 
@@ -64,7 +64,7 @@ public class WorkerActor extends Group {
         super.act(delta);
     }
 
-    public Entity getWorker() {
+    public Entity getEntity() {
         return model;
     }
 
@@ -72,9 +72,6 @@ public class WorkerActor extends Group {
         return previous;
     }
 
-    public String getName() {
-        return name;
-    }
 
 
 }

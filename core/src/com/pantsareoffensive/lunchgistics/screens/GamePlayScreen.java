@@ -1,7 +1,6 @@
 package com.pantsareoffensive.lunchgistics.screens;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -10,7 +9,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.pantsareoffensive.lunchgistics.Global;
 import com.pantsareoffensive.lunchgistics.LogisticsForeman;
@@ -20,7 +18,8 @@ import com.pantsareoffensive.lunchgistics.input.CameraScroll;
 import com.pantsareoffensive.lunchgistics.input.GameInput;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
 import com.pantsareoffensive.lunchgistics.map.GameWorld;
-
+import com.pantsareoffensive.lunchgistics.view.SkidActor;
+import com.pantsareoffensive.lunchgistics.view.WorkerActor;
 
 
 public class GamePlayScreen implements Screen {
@@ -45,7 +44,6 @@ public class GamePlayScreen implements Screen {
         font = new BitmapFont();
         batch = new SpriteBatch();
 
-        Global.Art.init();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Global.WIDTH, Global.HEIGHT);
 
@@ -70,8 +68,8 @@ public class GamePlayScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(new InputMultiplexer(gamePlayArea, cameraScroll, gameInput, hudArea));
 
-        if(app.preferencesManager.isMusicEnabled())
-            app.musicManager.play(MusicManager.GameMusic.GAME);
+        if(LogisticsForeman.preferencesManager.isMusicEnabled())
+            LogisticsForeman.musicManager.play(MusicManager.GameMusic.GAME);
     }
 
     @Override
@@ -127,8 +125,14 @@ public class GamePlayScreen implements Screen {
 
     }
 
-    public void addtoEngine(Entity e) {
-        engine.addEntity(e);
+    public void addtoEngine(WorkerActor e) {
+        gamePlayArea.addActor(e);
+        engine.addEntity(e.getEntity());
+    }
+
+    public void addtoEngine(SkidActor e) {
+        gamePlayArea.addActor(e);
+        engine.addEntity(e.getEntity());
     }
 
 }

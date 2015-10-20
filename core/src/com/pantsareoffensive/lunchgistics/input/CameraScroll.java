@@ -19,8 +19,6 @@ public class CameraScroll extends InputAdapter{
 
     private float zoomAmt = 1f;
 
-    private Vector2 mousePos = new Vector2();
-
     public CameraScroll(OrthographicCamera camera) { this.camera = camera; }
 
     @Override
@@ -69,12 +67,7 @@ public class CameraScroll extends InputAdapter{
                 return false;
         }
     }
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        mousePos.x = screenX;
-        mousePos.y = screenY;
-        return true;
-    }
+
 
     @Override
     public boolean scrolled(int amount) {
@@ -92,9 +85,9 @@ public class CameraScroll extends InputAdapter{
 
         camera.zoom = MathUtils.clamp(zoomAmt, minZoom,maxZoom);
 
-        float x = (mousePos.x - Gdx.graphics.getWidth() *0.5f)
+        float x = (Gdx.input.getX() - Gdx.graphics.getWidth() *0.5f)
                 * (oldZ - camera.zoom);
-        float y = (-mousePos.y + Gdx.graphics.getHeight() * 0.5f)
+        float y = (-Gdx.input.getY() + Gdx.graphics.getHeight() * 0.5f)
                 * (oldZ - camera.zoom);
         camera.translate(x,y,0);
 

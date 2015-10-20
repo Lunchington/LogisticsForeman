@@ -1,12 +1,12 @@
 package com.pantsareoffensive.lunchgistics.input;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.pantsareoffensive.lunchgistics.Global;
+import com.pantsareoffensive.lunchgistics.EntityFactory;
 import com.pantsareoffensive.lunchgistics.LogisticsForeman;
-import com.pantsareoffensive.lunchgistics.view.WorkerActor;
 
 public class GameInput extends InputAdapter {
     private Stage stage;
@@ -19,26 +19,30 @@ public class GameInput extends InputAdapter {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if (Input.Buttons.MIDDLE == button) {
-
-            Vector2 position = new Vector2(screenX, screenY);
-            stage.screenToStageCoordinates(position);
-
-            WorkerActor w = new WorkerActor(Global.Art.WORKER_ATLAS,position);
-            stage.addActor(w);
-            app.gameplayScreen.addtoEngine(w.getWorker());
-            return true;
-        }
 
         return false;
     }
 
     @Override
     public boolean keyUp(int key) {
+        Vector2 position;
+
         switch (key) {
             case Input.Keys.ESCAPE:
-                app.setScreen(app.menuScreen);
+                app.setScreen(LogisticsForeman.menuScreen);
                 return true;
+            case Input.Keys.NUM_1:
+                position = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+                stage.screenToStageCoordinates(position);
+                EntityFactory.addWorker(position);
+                return true;
+
+            case Input.Keys.NUM_2:
+                position = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+                stage.screenToStageCoordinates(position);
+                EntityFactory.addSkid(position);
+                return true;
+
             default:
                 return false;
         }
