@@ -3,7 +3,6 @@ package com.pantsareoffensive.lunchgistics.controllers;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 
 
 public class HudController implements EntityListener{
