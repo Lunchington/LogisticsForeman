@@ -6,15 +6,13 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.pantsareoffensive.lunchgistics.EntityFactory;
-import com.pantsareoffensive.lunchgistics.LogisticsForeman;
+import com.pantsareoffensive.lunchgistics.managers.ScreenManager;
 
 public class GameInput extends InputAdapter {
     private Stage stage;
-    private LogisticsForeman app;
 
-    public GameInput(LogisticsForeman app, Stage stage) {
+    public GameInput(Stage stage) {
         this.stage = stage;
-        this.app = app;
     }
 
     @Override
@@ -29,7 +27,7 @@ public class GameInput extends InputAdapter {
 
         switch (key) {
             case Input.Keys.ESCAPE:
-                app.setScreen(LogisticsForeman.menuScreen);
+                ScreenManager.getInstance().show(ScreenManager.GameScreens.MAIN_MENU);
                 return true;
             case Input.Keys.NUM_1:
                 position = new Vector2(Gdx.input.getX(), Gdx.input.getY());

@@ -10,6 +10,21 @@ public class MusicManager implements Disposable {
     private float volume = 1f;
     private boolean enabled = true;
 
+    private static MusicManager INSTANCE = null;
+
+    public static  MusicManager getInstance() {
+        if (INSTANCE == null) {
+            synchronized (MusicManager.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new MusicManager();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
+    private  MusicManager() {}
+
     public enum GameMusic {
         MENU("sounds/menuLoop.mp3"),
         GAME("sounds/gameLoop.mp3");
@@ -34,7 +49,6 @@ public class MusicManager implements Disposable {
         }
     }
 
-    public MusicManager() {}
 
     public void play(GameMusic music) {
         if (!enabled) return;

@@ -8,19 +8,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
+import com.pantsareoffensive.lunchgistics.managers.PreferencesManager;
 
 
 public class BaseMenuScreen implements Screen {
 
-    public LogisticsForeman app;
     public Table table;
     public Stage stage;
     public Skin skin;
 
-    public BaseMenuScreen(LogisticsForeman app) {
-        this.app  = app;
+    public BaseMenuScreen() {
         stage = new Stage();
 
         skin = new Skin(Gdx.files.internal("gui/gui.json"));
@@ -36,8 +34,8 @@ public class BaseMenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         Drawable splashDrawable =  new Image(new Texture(Gdx.files.internal("logo.png"))).getDrawable();
         table.setBackground(splashDrawable);
-        if (app.preferencesManager.isMusicEnabled()) {
-            app.musicManager.play(MusicManager.GameMusic.MENU);
+        if (PreferencesManager.getInstance().isMusicEnabled()) {
+            MusicManager.getInstance().play(MusicManager.GameMusic.MENU);
         }
 
     }

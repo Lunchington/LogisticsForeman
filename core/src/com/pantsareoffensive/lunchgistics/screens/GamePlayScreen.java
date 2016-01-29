@@ -1,6 +1,7 @@
 package com.pantsareoffensive.lunchgistics.screens;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -17,13 +18,13 @@ import com.pantsareoffensive.lunchgistics.controllers.HudController;
 import com.pantsareoffensive.lunchgistics.input.CameraScroll;
 import com.pantsareoffensive.lunchgistics.input.GameInput;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
+import com.pantsareoffensive.lunchgistics.managers.PreferencesManager;
 import com.pantsareoffensive.lunchgistics.map.GameWorld;
 import com.pantsareoffensive.lunchgistics.view.SkidActor;
 import com.pantsareoffensive.lunchgistics.view.WorkerActor;
 
 
 public class GamePlayScreen implements Screen {
-    private LogisticsForeman app;
 
     private GameWorld world;
 
@@ -39,8 +40,7 @@ public class GamePlayScreen implements Screen {
     private BitmapFont font;
     private SpriteBatch batch;
 
-    public GamePlayScreen(LogisticsForeman app) {
-        this.app = app;
+    public GamePlayScreen() {
         font = new BitmapFont();
         batch = new SpriteBatch();
 
@@ -55,10 +55,14 @@ public class GamePlayScreen implements Screen {
         world = new GameWorld(camera);
         cameraScroll = new CameraScroll(camera);
 
-        gameInput = new GameInput(app,gamePlayArea);
+        gameInput = new GameInput(gamePlayArea);
 
-        engine.addEntityListener(HudController.init(hudArea));
-        engine.addEntityListener(new GamePlayController(gamePlayArea));
+        HudController.getInstance().init(hudArea);
+        GamePlayController.getInstance().init(gamePlayArea);
+
+        engine.addEntityListener(HudController.getInstance());
+        engine.addEntityListener(GamePlayController.getInstance());
+
         LogisticsForeman.running = true;
 
     }
@@ -68,8 +72,8 @@ public class GamePlayScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(new InputMultiplexer(gamePlayArea, cameraScroll, gameInput, hudArea));
 
-        if(LogisticsForeman.preferencesManager.isMusicEnabled())
-            LogisticsForeman.musicManager.play(MusicManager.GameMusic.GAME);
+        if(PreferencesManager.getInstance().isMusicEnabled())
+            MusicManager.getInstance().play(MusicManager.GameMusic.GAME);
     }
 
     @Override
@@ -121,7 +125,6 @@ public class GamePlayScreen implements Screen {
         LogisticsForeman.running = false;
         gamePlayArea.dispose();
         hudArea.dispose();
-        Global.Art.dispose();
 
     }
 

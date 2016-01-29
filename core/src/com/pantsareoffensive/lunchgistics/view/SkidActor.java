@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.pantsareoffensive.lunchgistics.model.Skid;
 
 
-public class SkidActor extends Item{
+public class SkidActor extends ItemActor {
 
     public SkidActor (TextureRegion region, Vector2 position ) {
         super(region,position);

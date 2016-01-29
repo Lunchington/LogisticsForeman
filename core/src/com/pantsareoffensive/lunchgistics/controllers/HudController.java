@@ -8,29 +8,29 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public class HudController implements EntityListener{
     private Stage stage;
     private ToolTip toolTip;
-    public int count = 0;
 
     private static HudController INSTANCE = null;
 
-    public static HudController init(Stage stage) {
-        HudController hudCont = new HudController(stage);
-        INSTANCE = hudCont;
-        return hudCont;
-    }
-
-    public static HudController get() {
+    public static HudController getInstance() {
+        if (INSTANCE == null) {
+            synchronized (HudController.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new HudController();
+                }
+            }
+        }
         return INSTANCE;
     }
 
-    public HudController (Stage stage) {
+    public void init(Stage stage) {
         this.stage = stage;
-        this.toolTip = new ToolTip(stage.getViewport().getScreenWidth() / 2, 0);
-        stage.addActor(toolTip);
+        this.toolTip = new ToolTip(this.stage.getViewport().getScreenWidth() / 2, 0);
+        this.stage.addActor(this.toolTip);
     }
+
     @Override
     public void entityAdded(Entity entity) {
-        count++;
-        setToolTip("TESTIES: " + count );
+
     }
 
     @Override

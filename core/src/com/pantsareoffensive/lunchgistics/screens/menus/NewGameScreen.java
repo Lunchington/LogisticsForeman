@@ -2,12 +2,10 @@ package com.pantsareoffensive.lunchgistics.screens.menus;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.pantsareoffensive.lunchgistics.LogisticsForeman;
-import com.pantsareoffensive.lunchgistics.screens.GamePlayScreen;
+import com.pantsareoffensive.lunchgistics.managers.ScreenManager;
 
 public class NewGameScreen extends BaseMenuScreen {
 
-    public NewGameScreen(LogisticsForeman app) {  super(app); }
 
     @Override
     public void show() {
@@ -15,13 +13,13 @@ public class NewGameScreen extends BaseMenuScreen {
         table.defaults().spaceBottom(10).width(300).height(45);
 
         TextButton newWorld = new TextButton("New World", skin);
-        newWorld.addListener(new MenuButton(app) {
+        newWorld.addListener(new MenuButton() {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                app.gameplayScreen = new GamePlayScreen(app);
-                app.setScreen(app.gameplayScreen);
+                ScreenManager.getInstance().dispose(ScreenManager.GameScreens.GAME);
+                ScreenManager.getInstance().show(ScreenManager.GameScreens.GAME);
             }
         });
         table.add(newWorld);
@@ -29,11 +27,11 @@ public class NewGameScreen extends BaseMenuScreen {
         table.row();
 
         TextButton backButton = new TextButton("Back to main menu", skin);
-        backButton.addListener(new MenuButton(app) {
+        backButton.addListener(new MenuButton() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                app.setScreen(app.menuScreen);
+                ScreenManager.getInstance().show(ScreenManager.GameScreens.MAIN_MENU);
 
             }
         });

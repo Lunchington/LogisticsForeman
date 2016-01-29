@@ -5,15 +5,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.pantsareoffensive.lunchgistics.LogisticsForeman;
+import com.pantsareoffensive.lunchgistics.managers.ScreenManager;
 
 
 public class MenuScreen extends BaseMenuScreen {
 
-
-    public MenuScreen(LogisticsForeman app) {
-
-        super(app);
-    }
 
     @Override
     public void show() {
@@ -22,12 +18,12 @@ public class MenuScreen extends BaseMenuScreen {
 
         if (LogisticsForeman.running) {
             TextButton testButton = new TextButton("Return to game", skin);
-            testButton.addListener(new MenuButton(app) {
+            testButton.addListener(new MenuButton() {
 
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     super.touchUp(event, x, y, pointer, button);
-                    app.setScreen(app.gameplayScreen);
+                    ScreenManager.getInstance().show(ScreenManager.GameScreens.GAME);
                 }
             });
             table.add(testButton);
@@ -35,11 +31,11 @@ public class MenuScreen extends BaseMenuScreen {
         }
 
         TextButton newGameButton = new TextButton("New game", skin);
-        newGameButton.addListener(new MenuButton(app) {
+        newGameButton.addListener(new MenuButton() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                app.setScreen(app.newgameScreen);
+                ScreenManager.getInstance().show(ScreenManager.GameScreens.NEW_GAME);
             }
         });
         table.add(newGameButton);
@@ -50,19 +46,19 @@ public class MenuScreen extends BaseMenuScreen {
         table.row();
 
         TextButton optionsButton = new TextButton("Options", skin);
-        optionsButton.addListener(new MenuButton(app) {
+        optionsButton.addListener(new MenuButton() {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                app.setScreen(app.optionsScreen);
+                ScreenManager.getInstance().show(ScreenManager.GameScreens.OPTIONS);
             }
         });
         table.add(optionsButton);
         table.row();
 
         TextButton exitButton = new TextButton("Exit", skin);
-        exitButton.addListener(new MenuButton(app) {
+        exitButton.addListener(new MenuButton() {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {

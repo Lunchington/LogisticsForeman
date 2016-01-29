@@ -7,18 +7,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.pantsareoffensive.lunchgistics.LogisticsForeman;
+import com.pantsareoffensive.lunchgistics.managers.MusicManager;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager.GameMusic;
+import com.pantsareoffensive.lunchgistics.managers.PreferencesManager;
+import com.pantsareoffensive.lunchgistics.managers.SoundManager;
 import com.pantsareoffensive.lunchgistics.managers.SoundManager.GameSound;
+import com.pantsareoffensive.lunchgistics.managers.ScreenManager;
 
 
 public class OptionsScreen extends BaseMenuScreen {
     private Label musicVolumeValue;
     private Label soundVolumeValue;
 
-    public OptionsScreen(LogisticsForeman app) {
-        super(app);
-    }
 
     @Override
     public void show() {
@@ -32,26 +32,26 @@ public class OptionsScreen extends BaseMenuScreen {
         // Sound Check Box
         final CheckBox soundEffectsCheckbox = new CheckBox("", skin);
 
-        soundEffectsCheckbox.setChecked(app.preferencesManager.isSoundEnabled());
+        soundEffectsCheckbox.setChecked(PreferencesManager.getInstance().isSoundEnabled());
         soundEffectsCheckbox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 boolean enabled = soundEffectsCheckbox.isChecked();
-                app.preferencesManager.setSoundEnabled(enabled);
-                app.soundManager.setEnabled(enabled);
-                app.soundManager.play(GameSound.CLICK);
+                PreferencesManager.getInstance().setSoundEnabled(enabled);
+                SoundManager.getInstance().setEnabled(enabled);
+                SoundManager.getInstance().play(GameSound.CLICK);
             }
         });
 
         // Sound Slider
         Slider soundVolumeSlider = new Slider(0f, 1f, 0.1f, false, skin);
-        soundVolumeSlider.setValue(app.preferencesManager.getSoundVolume());
+        soundVolumeSlider.setValue(PreferencesManager.getInstance().getSoundVolume());
         soundVolumeSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 float value = ((Slider) actor).getValue();
-                app.preferencesManager.setSoundVolume(value);
-                app.soundManager.setVolume(value);
+                PreferencesManager.getInstance().setSoundVolume(value);
+                SoundManager.getInstance().setVolume(value);
                 updateSoundVolumeLabel();
             }
 
@@ -68,29 +68,29 @@ public class OptionsScreen extends BaseMenuScreen {
 
         // Music Check Box
         final CheckBox musicCheckbox = new CheckBox("", skin);
-        musicCheckbox.setChecked(app.preferencesManager.isMusicEnabled());
+        musicCheckbox.setChecked(PreferencesManager.getInstance().isMusicEnabled());
         musicCheckbox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 boolean enabled = musicCheckbox.isChecked();
-                app.preferencesManager.setMusicEnabled(enabled);
-                app.musicManager.setEnabled(enabled);
-                app.soundManager.play(GameSound.CLICK);
+                PreferencesManager.getInstance().setMusicEnabled(enabled);
+                MusicManager.getInstance().setEnabled(enabled);
+                SoundManager.getInstance().play(GameSound.CLICK);
 
                 // if the music is now enabled, start playing the menu music
-                if (enabled)app.musicManager.play(GameMusic.MENU);
+                if (enabled)MusicManager.getInstance().play(GameMusic.MENU);
             }
         });
 
         // Music Slider
         Slider musicVolumeSlider = new Slider(0f, 1f, 0.1f, false, skin);
-        musicVolumeSlider.setValue(app.preferencesManager.getMusicVolume());
+        musicVolumeSlider.setValue(PreferencesManager.getInstance().getMusicVolume());
         musicVolumeSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 float value = ((Slider) actor).getValue();
-                app.preferencesManager.setMusicVolume(value);
-                app.musicManager.setVolume(value);
+                PreferencesManager.getInstance().setMusicVolume(value);
+                MusicManager.getInstance().setVolume(value);
                 updateMusicVolumeLabel();
             }
 
@@ -107,11 +107,11 @@ public class OptionsScreen extends BaseMenuScreen {
 
         // back to Main
         TextButton backButton = new TextButton("Back to main menu", skin);
-        backButton.addListener(new MenuButton(app) {
+        backButton.addListener(new MenuButton() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                app.setScreen(app.menuScreen);
+                ScreenManager.getInstance().show(ScreenManager.GameScreens.MAIN_MENU);
 
             }
         });
@@ -121,12 +121,12 @@ public class OptionsScreen extends BaseMenuScreen {
 
 
     private void updateMusicVolumeLabel() {
-        float volume = (app.preferencesManager.getMusicVolume() * 100);
+        float volume = (PreferencesManager.getInstance().getMusicVolume() * 100);
         musicVolumeValue.setText(String.format("%1.0f%%", volume));
     }
 
     private void updateSoundVolumeLabel() {
-        float volume = (app.preferencesManager.getSoundVolume() * 100);
+        float volume = (PreferencesManager.getInstance().getSoundVolume() * 100);
         soundVolumeValue.setText(String.format("%1.0f%%", volume));
     }
 }

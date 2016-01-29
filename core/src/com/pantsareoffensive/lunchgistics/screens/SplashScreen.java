@@ -12,17 +12,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.pantsareoffensive.lunchgistics.LogisticsForeman;
+import com.pantsareoffensive.lunchgistics.managers.ScreenManager;
 
 public class SplashScreen implements Screen {
-    private LogisticsForeman app;
 
     private Image splashImage;
     private Stage stage;
 
 
-    public SplashScreen(LogisticsForeman app) {
-        this.app = app;
+    public SplashScreen() {
         stage = new Stage();
     }
 
@@ -37,7 +35,7 @@ public class SplashScreen implements Screen {
         splashImage.addAction(sequence(fadeIn(0.75f), delay(1.75f), fadeOut(0.75f), new Action() {
             @Override
             public boolean act(float delta) {
-                app.setScreen(app.menuScreen);
+                ScreenManager.getInstance().show(ScreenManager.GameScreens.MAIN_MENU);
                 return true;
             }
         }));

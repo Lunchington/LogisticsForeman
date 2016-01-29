@@ -7,11 +7,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Align;
 
-public class Item extends Actor {
+public class ItemActor extends Actor {
     private TextureRegion textureRegion;
     protected Entity model;
 
-    public Item (TextureRegion textureRegion, Vector2 position) {
+    public ItemActor(TextureRegion textureRegion, Vector2 position) {
         setSize(32, 32);
         setPosition(position.x, position.y, Align.center);
         this.textureRegion = textureRegion;

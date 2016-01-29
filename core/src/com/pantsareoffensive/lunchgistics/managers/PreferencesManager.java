@@ -4,6 +4,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
 public class PreferencesManager {
+
+    private static PreferencesManager INSTANCE = null;
+
+    public static PreferencesManager getInstance() {
+        if (INSTANCE == null) {
+            synchronized (PreferencesManager.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new PreferencesManager();
+                }
+            }
+        }
+        return INSTANCE;
+
+    }
+
+
+
     private static final String PREF_MUSIC_VOLUME = "music.volume";
     private static final String PREF_MUSIC_ENABLED = "music.enabled";
     
@@ -12,7 +29,7 @@ public class PreferencesManager {
     
     private static final String PREFS_NAME = "lunchgistics";
 
-    public PreferencesManager() {}
+    private PreferencesManager() {}
 
     protected Preferences prefs =  Gdx.app.getPreferences(PREFS_NAME);
 
