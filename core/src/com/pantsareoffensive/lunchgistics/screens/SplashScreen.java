@@ -16,7 +16,6 @@ import com.pantsareoffensive.lunchgistics.managers.ScreenManager;
 
 public class SplashScreen implements Screen {
 
-    private Image splashImage;
     private Stage stage;
 
 
@@ -27,7 +26,7 @@ public class SplashScreen implements Screen {
     @Override
     public void show() {
 
-        splashImage = new Image(new Texture(Gdx.files.internal("pafSplash.png")));
+        Image splashImage = new Image(new Texture(Gdx.files.internal("pafSplash.png")));
         splashImage.setFillParent(true);
 
         splashImage.getColor().a = 0f;

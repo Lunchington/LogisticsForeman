@@ -10,10 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 public class CameraScroll extends InputAdapter{
     private OrthographicCamera camera;
     private Vector2 move = new Vector2(0,0);
-    private float scrollSpeed = 500f;
-
-    private  float minZoom = 0.4f;
-    private  float maxZoom = 3f;
 
     public float zoomSpeed = 0.2f;
 
@@ -82,8 +78,10 @@ public class CameraScroll extends InputAdapter{
         camera.zoom = zoomAmt;
 
 
+        float minZoom = 0.4f;
+        float maxZoom = 3f;
 
-        camera.zoom = MathUtils.clamp(zoomAmt, minZoom,maxZoom);
+        camera.zoom = MathUtils.clamp(zoomAmt, minZoom, maxZoom);
 
         float x = (Gdx.input.getX() - Gdx.graphics.getWidth() *0.5f)
                 * (oldZ - camera.zoom);
@@ -92,6 +90,7 @@ public class CameraScroll extends InputAdapter{
         camera.translate(x,y,0);
 
 
+        float scrollSpeed = 500f;
         Vector2 movement = move.cpy().nor().scl(scrollSpeed * delta);
 
         camera.translate(movement.x , movement.y, 0);

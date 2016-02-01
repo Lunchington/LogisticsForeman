@@ -1,9 +1,7 @@
 package com.pantsareoffensive.lunchgistics.screens.menus;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 import com.pantsareoffensive.lunchgistics.managers.SoundManager;
 
 public class MenuButton extends InputListener {

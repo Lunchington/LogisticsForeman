@@ -1,7 +1,6 @@
 package com.pantsareoffensive.lunchgistics.screens;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -19,14 +18,14 @@ import com.pantsareoffensive.lunchgistics.input.CameraScroll;
 import com.pantsareoffensive.lunchgistics.input.GameInput;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
 import com.pantsareoffensive.lunchgistics.managers.PreferencesManager;
-import com.pantsareoffensive.lunchgistics.map.GameWorld;
+import com.pantsareoffensive.lunchgistics.map.GameMap;
 import com.pantsareoffensive.lunchgistics.view.SkidActor;
 import com.pantsareoffensive.lunchgistics.view.WorkerActor;
 
 
 public class GamePlayScreen implements Screen {
 
-    private GameWorld world;
+    private GameMap world;
 
     private Stage hudArea;
     private Stage gamePlayArea;
@@ -35,7 +34,6 @@ public class GamePlayScreen implements Screen {
     private CameraScroll cameraScroll;
     private GameInput gameInput;
 
-    private OrthographicCamera camera;
 
     private BitmapFont font;
     private SpriteBatch batch;
@@ -44,15 +42,15 @@ public class GamePlayScreen implements Screen {
         font = new BitmapFont();
         batch = new SpriteBatch();
 
-        camera = new OrthographicCamera();
+        OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false, Global.WIDTH, Global.HEIGHT);
 
         hudArea = new Stage(new StretchViewport(Global.WIDTH, Global.HEIGHT));
-        gamePlayArea = new Stage(new StretchViewport(Global.WIDTH, Global.HEIGHT,camera));
+        gamePlayArea = new Stage(new StretchViewport(Global.WIDTH, Global.HEIGHT, camera));
 
         engine = new Engine();
 
-        world = new GameWorld(camera);
+        world = new GameMap(camera);
         cameraScroll = new CameraScroll(camera);
 
         gameInput = new GameInput(gamePlayArea);
@@ -83,19 +81,24 @@ public class GamePlayScreen implements Screen {
 
         cameraScroll.update(delta);
         engine.update(delta);
+        world.update(delta);
+
         gamePlayArea.act(delta);
         hudArea.act(delta);
 
-        world.update(delta);
-
-        world.render();
-        gamePlayArea.draw();
-        hudArea.draw();
-
         batch.begin();
+
+        world.render(batch);
+
+        batch.setProjectionMatrix(hudArea.getCamera().combined);
+
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
+
         batch.end();
 
+
+        gamePlayArea.draw();
+        hudArea.draw();
 
     }
 

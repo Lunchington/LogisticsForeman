@@ -1,40 +1,24 @@
 package com.pantsareoffensive.lunchgistics.map;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class GameWorld {
-
-    private TiledMap map;
-    private OrthogonalTiledMapRenderer renderer;
+public class GameMap {
+    protected MapData map;
     private OrthographicCamera camera;
 
-    private int mapHeight;
-    private int mapWidth;
-    int tilePixelWidth; //size of each tile
-    int tilePixelHeight;
-
-    public GameWorld(OrthographicCamera camera) {
-        map = new TmxMapLoader().load("maps/testing.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1);
-
-        mapHeight = map.getProperties().get("height", Integer.class);
-        mapWidth = map.getProperties().get("width", Integer.class);
-
-        tilePixelWidth =  map.getProperties().get("tilewidth", Integer.class);
-        tilePixelHeight  = map.getProperties().get("tileheight", Integer.class);
-
+    public GameMap(OrthographicCamera camera) {
         this.camera = camera;
+        this.map = new MapData().getBlank(100,80);
+
     }
 
     public void update(float delta ) {
 
         int mapLeft = 0;
-        int mapRight =mapWidth * tilePixelWidth;
+        int mapRight =map.width * 32;
         int mapBottom = 0;
-        int mapTop = mapHeight * tilePixelHeight;
+        int mapTop = map.height * 32;
 
         float cameraHalfWidth = camera.viewportWidth * .5f * camera.zoom;
         float cameraHalfHeight = camera.viewportHeight * .5f * camera.zoom;
@@ -65,11 +49,30 @@ public class GameWorld {
             camera.position.y = mapTop - cameraHalfHeight;
         }
         camera.update();
-
-    }
-    public void render() {
-        renderer.setView(camera);
-        renderer.render();
     }
 
+    public void render(SpriteBatch batch) {
+        batch.setProjectionMatrix(camera.combined);
+
+        int startX = (int)(camera.position.x - camera.viewportWidth/2 * camera.zoom)/ 32;
+        if (startX < 0) startX = 0;
+
+        int startY = (int)(camera.position.y - camera.viewportHeight/2* camera.zoom) / 32;
+        if (startY < 0) startY = 0;
+
+        int endX = (int)(camera.position.x + camera.viewportWidth/2* camera.zoom) / 32 + 2;
+        if (endX > map.width) endX = map.width;
+
+        int endY = (int)(camera.position.y + camera.viewportHeight/2* camera.zoom) / 32 + 2;
+        if (endY > map.height) endY = map.height;
+
+
+        /*for(int y = 0; y < tiles.length; y++) {
+            for (int x = 0; x < tiles[y].length; x++) {*/
+        for(int y = startY; y < endY; y++) {
+            for (int x = startX; x < endX; x++) {
+                batch.draw(map.tiles[x][y].getTexture(), x*32, y*32);
+            }
+        }
+    }
 }

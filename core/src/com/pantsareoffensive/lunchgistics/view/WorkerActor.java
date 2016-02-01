@@ -41,7 +41,7 @@ public class WorkerActor extends Group {
             public void enter(InputEvent event, float x, float y, int pointer,
                               Actor fromActor) {
                 super.enter(event, x, y, pointer, fromActor);
-                HudController.get().setToolTip(getName());
+                HudController.getInstance().setToolTip(getName());
 
 
             }
@@ -50,7 +50,7 @@ public class WorkerActor extends Group {
             public void exit(InputEvent event, float x, float y, int pointer,
                              Actor toActor) {
                 super.exit(event, x, y, pointer, toActor);
-                HudController.get().setToolTip("");
+                HudController.getInstance().setToolTip("");
 
 
             }
