@@ -1,10 +1,9 @@
 package com.pantsareoffensive.lunchgistics.controllers;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntityListener;
+
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-public class GamePlayController implements EntityListener{
+public class GamePlayController {
     private Stage stage;
 
     private static GamePlayController INSTANCE = null;
@@ -25,13 +24,4 @@ public class GamePlayController implements EntityListener{
     }
 
 
-    @Override
-    public void entityAdded(Entity entity) {
-
-    }
-
-    @Override
-    public void entityRemoved(Entity entity) {
-
-    }
 }

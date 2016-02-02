@@ -1,10 +1,18 @@
 package com.pantsareoffensive.lunchgistics.map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.pantsareoffensive.lunchgistics.object.Entitiy;
+
+import java.util.ArrayList;
 
 public class GameMap {
     protected MapData map;
+    protected ArrayList<Entitiy> entitiyList =new ArrayList<Entitiy>();
+
     private OrthographicCamera camera;
 
     public GameMap(OrthographicCamera camera) {
@@ -74,5 +82,18 @@ public class GameMap {
                 batch.draw(map.tiles[x][y].getTexture(), x*32, y*32);
             }
         }
+
+        if (entitiyList.size() > 0) {
+            for (Entitiy e : entitiyList) {
+                e.render(batch);
+            }
+        }
+
+    }
+
+    public void addEntity(Entitiy e,Vector2 pos) {
+        Vector3 newV = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(),0));
+        e.setPosition(new Vector2(newV.x,newV.y));
+        entitiyList.add(e);
     }
 }

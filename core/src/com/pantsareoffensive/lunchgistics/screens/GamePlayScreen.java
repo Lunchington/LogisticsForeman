@@ -1,6 +1,5 @@
 package com.pantsareoffensive.lunchgistics.screens;
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -19,8 +18,6 @@ import com.pantsareoffensive.lunchgistics.input.GameInput;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
 import com.pantsareoffensive.lunchgistics.managers.PreferencesManager;
 import com.pantsareoffensive.lunchgistics.map.GameMap;
-import com.pantsareoffensive.lunchgistics.view.SkidActor;
-import com.pantsareoffensive.lunchgistics.view.WorkerActor;
 
 
 public class GamePlayScreen implements Screen {
@@ -29,7 +26,6 @@ public class GamePlayScreen implements Screen {
 
     private Stage hudArea;
     private Stage gamePlayArea;
-    private Engine engine;
 
     private CameraScroll cameraScroll;
     private GameInput gameInput;
@@ -48,18 +44,14 @@ public class GamePlayScreen implements Screen {
         hudArea = new Stage(new StretchViewport(Global.WIDTH, Global.HEIGHT));
         gamePlayArea = new Stage(new StretchViewport(Global.WIDTH, Global.HEIGHT, camera));
 
-        engine = new Engine();
 
         world = new GameMap(camera);
         cameraScroll = new CameraScroll(camera);
 
-        gameInput = new GameInput(gamePlayArea);
+        gameInput = new GameInput(gamePlayArea,world);
 
         HudController.getInstance().init(hudArea);
         GamePlayController.getInstance().init(gamePlayArea);
-
-        engine.addEntityListener(HudController.getInstance());
-        engine.addEntityListener(GamePlayController.getInstance());
 
         LogisticsForeman.running = true;
 
@@ -80,7 +72,6 @@ public class GamePlayScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         cameraScroll.update(delta);
-        engine.update(delta);
         world.update(delta);
 
         gamePlayArea.act(delta);
@@ -131,14 +122,5 @@ public class GamePlayScreen implements Screen {
 
     }
 
-    public void addtoEngine(WorkerActor e) {
-        gamePlayArea.addActor(e);
-        engine.addEntity(e.getEntity());
-    }
-
-    public void addtoEngine(SkidActor e) {
-        gamePlayArea.addActor(e);
-        engine.addEntity(e.getEntity());
-    }
 
 }

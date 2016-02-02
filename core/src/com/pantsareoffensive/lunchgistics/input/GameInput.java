@@ -5,14 +5,18 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.pantsareoffensive.lunchgistics.EntityFactory;
+import com.pantsareoffensive.lunchgistics.object.Skid;
+import com.pantsareoffensive.lunchgistics.object.Worker;
 import com.pantsareoffensive.lunchgistics.managers.ScreenManager;
+import com.pantsareoffensive.lunchgistics.map.GameMap;
 
 public class GameInput extends InputAdapter {
     private Stage stage;
+    private GameMap map;
 
-    public GameInput(Stage stage) {
+    public GameInput(Stage stage, GameMap map) {
         this.stage = stage;
+        this.map = map;
     }
 
     @Override
@@ -30,15 +34,11 @@ public class GameInput extends InputAdapter {
                 ScreenManager.getInstance().show(ScreenManager.GameScreens.MAIN_MENU);
                 return true;
             case Input.Keys.NUM_1:
-                position = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-                stage.screenToStageCoordinates(position);
-                EntityFactory.addWorker(position);
+                map.addEntity(new Worker(), new Vector2(Gdx.input.getX(), Gdx.input.getY()));
                 return true;
 
             case Input.Keys.NUM_2:
-                position = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-                stage.screenToStageCoordinates(position);
-                EntityFactory.addSkid(position);
+                map.addEntity(new Skid(), new Vector2(Gdx.input.getX(), Gdx.input.getY()));
                 return true;
 
             default:

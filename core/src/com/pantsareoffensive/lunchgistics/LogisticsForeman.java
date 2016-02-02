@@ -28,7 +28,7 @@ public class LogisticsForeman extends Game {
 
         RandomNames.init();
 
-        ScreenManager.getInstance().show(ScreenManager.GameScreens.SPLASH);
+        ScreenManager.getInstance().show(ScreenManager.GameScreens.GAME);
     }
 
     @Override

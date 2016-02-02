@@ -1,11 +1,10 @@
 package com.pantsareoffensive.lunchgistics.controllers;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntityListener;
+
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 
-public class HudController implements EntityListener{
+public class HudController {
     private Stage stage;
     private ToolTip toolTip;
 
@@ -28,15 +27,6 @@ public class HudController implements EntityListener{
         this.stage.addActor(this.toolTip);
     }
 
-    @Override
-    public void entityAdded(Entity entity) {
-
-    }
-
-    @Override
-    public void entityRemoved(Entity entity) {
-
-    }
 
     public void setToolTip(String text) {
         toolTip.setText(text);
