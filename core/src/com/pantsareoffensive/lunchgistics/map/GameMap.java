@@ -1,17 +1,16 @@
 package com.pantsareoffensive.lunchgistics.map;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.pantsareoffensive.lunchgistics.object.Entitiy;
+import com.pantsareoffensive.lunchgistics.object.Entity;
 
 import java.util.ArrayList;
 
 public class GameMap {
     protected MapData map;
-    protected ArrayList<Entitiy> entitiyList =new ArrayList<Entitiy>();
+    protected ArrayList<Entity> entitiyList =new ArrayList<Entity>();
 
     private OrthographicCamera camera;
 
@@ -36,8 +35,10 @@ public class GameMap {
         float cameraBottom = camera.position.y - cameraHalfHeight;
         float cameraTop = camera.position.y + cameraHalfHeight;
 
+        for (Entity e : entitiyList) {
+            e.update(delta);
+        }
 
-// Horizontal axis
         if(cameraLeft <= mapLeft)
         {
             camera.position.x = mapLeft + cameraHalfWidth;
@@ -47,7 +48,6 @@ public class GameMap {
             camera.position.x = mapRight - cameraHalfWidth;
         }
 
-// Vertical axis
         if(cameraBottom <= mapBottom)
         {
             camera.position.y = mapBottom + cameraHalfHeight;
@@ -75,25 +75,24 @@ public class GameMap {
         if (endY > map.height) endY = map.height;
 
 
-        /*for(int y = 0; y < tiles.length; y++) {
-            for (int x = 0; x < tiles[y].length; x++) {*/
         for(int y = startY; y < endY; y++) {
             for (int x = startX; x < endX; x++) {
                 batch.draw(map.tiles[x][y].getTexture(), x*32, y*32);
             }
         }
 
-        if (entitiyList.size() > 0) {
-            for (Entitiy e : entitiyList) {
-                e.render(batch);
-            }
+        for (Entity e : entitiyList) {
+            e.render(batch);
         }
+
 
     }
 
-    public void addEntity(Entitiy e,Vector2 pos) {
-        Vector3 newV = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(),0));
+    public void addEntity(Entity e, Vector2 pos) {
+        Vector3 newV = camera.unproject(new Vector3(pos.x, pos.y,0));
         e.setPosition(new Vector2(newV.x,newV.y));
         entitiyList.add(e);
     }
+
+    public ArrayList<Entity> getEntities() {return entitiyList;}
 }

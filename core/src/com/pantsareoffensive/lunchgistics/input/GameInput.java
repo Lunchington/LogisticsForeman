@@ -11,18 +11,12 @@ import com.pantsareoffensive.lunchgistics.managers.ScreenManager;
 import com.pantsareoffensive.lunchgistics.map.GameMap;
 
 public class GameInput extends InputAdapter {
-    private Stage stage;
     private GameMap map;
 
-    public GameInput(Stage stage, GameMap map) {
-        this.stage = stage;
+    private Vector2 clicked;
+
+    public GameInput(GameMap map) {
         this.map = map;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-
-        return false;
     }
 
     @Override
@@ -53,4 +47,24 @@ public class GameInput extends InputAdapter {
                 return false;
         }
     }
+
+    @Override
+    public boolean touchDown (int x, int y, int pointer, int button) {
+        if (button == Input.Buttons.LEFT) {
+            clicked = new Vector2(x,y);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean touchUp (int x, int y, int pointer, int button) {
+        if (button == Input.Buttons.LEFT) {
+            clicked = null;
+            return true;
+        }
+        return false;
+    }
+
+    public Vector2 getClicked() { return clicked;}
 }
