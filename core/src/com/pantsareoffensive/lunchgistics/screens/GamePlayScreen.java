@@ -5,23 +5,23 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
+
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.*;
 import com.pantsareoffensive.lunchgistics.Global;
 import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 import com.pantsareoffensive.lunchgistics.controllers.HudController;
 import com.pantsareoffensive.lunchgistics.input.CameraScroll;
+import com.pantsareoffensive.lunchgistics.input.GameCamera;
 import com.pantsareoffensive.lunchgistics.input.GameInput;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
 import com.pantsareoffensive.lunchgistics.managers.PreferencesManager;
 import com.pantsareoffensive.lunchgistics.map.GameMap;
+
 
 
 public class GamePlayScreen implements Screen {
@@ -33,33 +33,31 @@ public class GamePlayScreen implements Screen {
     private CameraScroll cameraScroll;
     private GameInput gameInput;
 
-
     private BitmapFont font;
     private SpriteBatch batch;
     private ShapeRenderer selectionBox = new ShapeRenderer();
 
 
-    private  OrthographicCamera camera;
+    private GameCamera camera;
+    private Viewport viewport;
 
     public GamePlayScreen() {
         font = new BitmapFont();
         batch = new SpriteBatch();
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Global.WIDTH, Global.HEIGHT);
-
+        camera = new GameCamera();
+        viewport = new FitViewport(Global.WIDTH, Global.HEIGHT, camera);
         hudArea = new Stage(new StretchViewport(Global.WIDTH, Global.HEIGHT));
-
-
-        world = new GameMap(camera);
+        world = new GameMap(viewport);
         cameraScroll = new CameraScroll(camera);
-
         gameInput = new GameInput(world);
 
         HudController.getInstance().init(hudArea);
 
-        LogisticsForeman.running = true;
+        camera.setToOrtho(false, Global.WIDTH, Global.HEIGHT);
+        camera.setWorldBounds(0,0,world.getMapWidth()*32,world.getMapHeight()*32);
 
+        LogisticsForeman.running = true;
     }
 
 
@@ -82,23 +80,26 @@ public class GamePlayScreen implements Screen {
         hudArea.act(delta);
 
 
+
         batch.begin();
+            batch.setProjectionMatrix(camera.combined);
             world.render(batch);
+
             batch.setProjectionMatrix(hudArea.getCamera().combined);
             font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
-            font.draw(batch, "CLICKED: " + gameInput.getClicked(), 10, 35);
-            font.draw(batch, "ENTITIES: " + world.getEntities().size(), 10, 50);
-
         batch.end();
 
         drawSelection();
 
         hudArea.draw();
+
+
     }
 
     @Override
     public void resize(int width, int height) {
         hudArea.getViewport().update(width, height, false);
+        viewport.update(width, height);
     }
 
     @Override
@@ -128,8 +129,8 @@ public class GamePlayScreen implements Screen {
             Gdx.gl.glEnable(GL20.GL_BLEND);
             Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-            Vector3 newVec = camera.unproject(new Vector3(gameInput.getClicked(), 0));
-            Vector3 mPos = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+            Vector3 newVec = viewport.unproject(new Vector3(gameInput.getClicked(), 0));
+            Vector3 mPos = viewport.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             selectionBox.setProjectionMatrix(camera.combined);
 
             selectionBox.begin(ShapeRenderer.ShapeType.Filled);

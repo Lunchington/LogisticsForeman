@@ -8,14 +8,20 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 public class CameraScroll extends InputAdapter{
-    private OrthographicCamera camera;
+    private GameCamera camera;
     private Vector2 move = new Vector2(0,0);
 
     public float zoomSpeed = 0.2f;
 
     private float zoomAmt = 1f;
+    private float minZoom = 0.4f;
+    private float maxZoom = 3f;
 
-    public CameraScroll(OrthographicCamera camera) { this.camera = camera; }
+
+
+    private float delta;
+
+    public CameraScroll(GameCamera camera) { this.camera = camera; }
 
     @Override
     public boolean keyDown(int key) {
@@ -74,27 +80,10 @@ public class CameraScroll extends InputAdapter{
 
 
     public void update(float delta) {
-        float oldZ = camera.zoom;
-        camera.zoom = zoomAmt;
-
-
-        float minZoom = 0.4f;
-        float maxZoom = 3f;
-
-        camera.zoom = MathUtils.clamp(zoomAmt, minZoom, maxZoom);
-
-        float x = (Gdx.input.getX() - Gdx.graphics.getWidth() *0.5f)
-                * (oldZ - camera.zoom);
-        float y = (-Gdx.input.getY() + Gdx.graphics.getHeight() * 0.5f)
-                * (oldZ - camera.zoom);
-        camera.translate(x,y,0);
-
-
         float scrollSpeed = 500f;
         Vector2 movement = move.cpy().nor().scl(scrollSpeed * delta);
-
-        camera.translate(movement.x , movement.y, 0);
-        camera.update();
+        camera.translateSafe(movement.x , movement.y);
     }
+
 
 }

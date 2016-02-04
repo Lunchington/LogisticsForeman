@@ -21,7 +21,6 @@ public class GameInput extends InputAdapter {
 
     @Override
     public boolean keyUp(int key) {
-        Vector2 position;
 
         switch (key) {
             case Input.Keys.ESCAPE:
