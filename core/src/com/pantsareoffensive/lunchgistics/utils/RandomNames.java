@@ -23,7 +23,7 @@ public class RandomNames {
         return randomNames;
     }
 
-    public static RandomNames get() {
+    public static RandomNames getInstance() {
         return INSTANCE;
     }
 

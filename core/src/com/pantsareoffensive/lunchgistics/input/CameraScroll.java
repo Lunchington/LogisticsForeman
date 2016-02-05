@@ -1,10 +1,7 @@
 package com.pantsareoffensive.lunchgistics.input;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 public class CameraScroll extends InputAdapter{
@@ -16,10 +13,7 @@ public class CameraScroll extends InputAdapter{
     private float zoomAmt = 1f;
     private float minZoom = 0.4f;
     private float maxZoom = 3f;
-
-
-
-    private float delta;
+    float scrollSpeed = 500f;
 
     public CameraScroll(GameCamera camera) { this.camera = camera; }
 
@@ -80,7 +74,6 @@ public class CameraScroll extends InputAdapter{
 
 
     public void update(float delta) {
-        float scrollSpeed = 500f;
         Vector2 movement = move.cpy().nor().scl(scrollSpeed * delta);
         camera.translateSafe(movement.x , movement.y);
     }

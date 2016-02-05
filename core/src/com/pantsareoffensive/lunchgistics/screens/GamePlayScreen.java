@@ -79,14 +79,13 @@ public class GamePlayScreen implements Screen {
         world.update(delta);
         hudArea.act(delta);
 
-
+        if(gameInput.getSelected() != null)
+            HudController.getInstance().setToolTip(gameInput.getSelected().toString());
 
         batch.begin();
             batch.setProjectionMatrix(camera.combined);
             world.render(batch);
 
-            batch.setProjectionMatrix(hudArea.getCamera().combined);
-            font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
         batch.end();
 
         drawSelection();
@@ -129,35 +128,22 @@ public class GamePlayScreen implements Screen {
             Gdx.gl.glEnable(GL20.GL_BLEND);
             Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-            Vector3 newVec = viewport.unproject(new Vector3(gameInput.getClicked(), 0));
-            Vector3 mPos = viewport.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             selectionBox.setProjectionMatrix(camera.combined);
 
             selectionBox.begin(ShapeRenderer.ShapeType.Filled);
             selectionBox.setColor(new Color((float)53/255, (float)125/255, (float)173/255, 0.5f));
 
-            Vector3 drawVec = newVec.cpy();
-            float w;
-            float h;
+            selectionBox.rect(
+                    gameInput.getClickRect().x,
+                    gameInput.getClickRect().y,
+                    gameInput.getClickRect().width,
+                    gameInput.getClickRect().height
+            );
 
-            if (newVec.x > mPos.x) {
-                drawVec.x = mPos.x;
-                w = newVec.x - mPos.x;
-            } else
-                w = mPos.x - newVec.x;
-
-            if (newVec.y > mPos.y) {
-                drawVec.y = mPos.y;
-                h = newVec.y - mPos.y;
-            }else
-                h = mPos.y - newVec.y;
-
-            selectionBox.rect(drawVec.x,drawVec.y,w,h);
             selectionBox.end();
             Gdx.gl.glDisable(GL20.GL_BLEND);
 
         }
     }
-
 
 }
