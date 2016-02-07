@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.pantsareoffensive.lunchgistics.controllers.HudController;
 import com.pantsareoffensive.lunchgistics.object.Entity;
 import com.pantsareoffensive.lunchgistics.object.GameObject;
 
@@ -21,6 +22,9 @@ public class GameMap {
 
     public int getMapWidth() {return map.width; }
     public int getMapHeight() {return map.height; }
+
+    public int getMapPixelWidth() {return map.width * 32; }
+    public int getMapPixelHeight() {return map.height * 32; }
 
     public GameMap(Viewport view) {
         this.view = view;
@@ -90,9 +94,12 @@ public class GameMap {
         Vector2 v = clicked.cpy();
         view.unproject(v);
         for (GameObject g: gameObjects) {
-            if (g.isInBounds(v))
+            if (g.isInBounds(v)) {
+                HudController.getInstance().setToolTip(g.toString());
                 return g;
+            }
         }
+        HudController.getInstance().setToolTip("");
         return null;
     }
 

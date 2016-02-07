@@ -30,7 +30,7 @@ public class BasicInventory extends GameObject implements IStorage {
     }
 
     @Override
-    public boolean canIRemove(GameObject obj) {
+    public boolean canRemove(GameObject obj) {
         return false;
     }
 
@@ -46,5 +46,10 @@ public class BasicInventory extends GameObject implements IStorage {
                 i++;
         }
         return i;
+    }
+
+    @Override
+    public String toString() {
+        return "Space: " + getAvailableSpace() + "/" + getInventorySpace();
     }
 }

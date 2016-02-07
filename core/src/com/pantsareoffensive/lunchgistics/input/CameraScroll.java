@@ -1,21 +1,32 @@
 package com.pantsareoffensive.lunchgistics.input;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
+import com.pantsareoffensive.lunchgistics.map.GameMap;
 
 public class CameraScroll extends InputAdapter{
-    private GameCamera camera;
+    private GameMap map;
+    private OrthographicCamera camera;
     private Vector2 move = new Vector2(0,0);
 
     public float zoomSpeed = 0.2f;
 
     private float zoomAmt = 1f;
-    private float minZoom = 0.4f;
-    private float maxZoom = 3f;
+    private float minZoom = 0.1f;
+    private float maxZoom = 1f;
     float scrollSpeed = 500f;
 
-    public CameraScroll(GameCamera camera) { this.camera = camera; }
+
+    public CameraScroll(GameMap map) {
+        this.map = map;
+        this.camera = (OrthographicCamera) map.getView().getCamera();
+    }
 
     @Override
     public boolean keyDown(int key) {
@@ -74,9 +85,34 @@ public class CameraScroll extends InputAdapter{
 
 
     public void update(float delta) {
+
+
         Vector2 movement = move.cpy().nor().scl(scrollSpeed * delta);
-        camera.translateSafe(movement.x , movement.y);
+
+        camera.translate(movement.x , movement.y);
+        attemptZoom(zoomAmt);
+        ensureBounds();
     }
 
+
+    public void ensureBounds() {
+        float minX = camera.zoom * (camera.viewportWidth /2);
+        float maxX = map.getMapPixelWidth() - minX;
+
+        float minY = camera.zoom *(camera.viewportHeight /2);
+        float maxY = map.getMapPixelHeight() - minY;
+
+        camera.position.set(
+                MathUtils.clamp(camera.position.x, minX,maxX),
+                MathUtils.clamp(camera.position.y, minY,maxY),
+                0);
+        camera.update();
+    }
+
+    public void attemptZoom(float newZoom)
+    {
+        camera.zoom = MathUtils.clamp(newZoom,minZoom,maxZoom);
+
+    }
 
 }

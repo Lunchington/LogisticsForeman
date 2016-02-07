@@ -5,10 +5,12 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.*;
@@ -38,24 +40,23 @@ public class GamePlayScreen implements Screen {
     private ShapeRenderer selectionBox = new ShapeRenderer();
 
 
-    private GameCamera camera;
+    private OrthographicCamera camera;
     private Viewport viewport;
 
     public GamePlayScreen() {
         font = new BitmapFont();
         batch = new SpriteBatch();
 
-        camera = new GameCamera();
+        camera = new OrthographicCamera(Global.WIDTH, Global.HEIGHT);
         viewport = new FitViewport(Global.WIDTH, Global.HEIGHT, camera);
         hudArea = new Stage(new StretchViewport(Global.WIDTH, Global.HEIGHT));
         world = new GameMap(viewport);
-        cameraScroll = new CameraScroll(camera);
+        cameraScroll = new CameraScroll(world);
         gameInput = new GameInput(world);
 
         HudController.getInstance().init(hudArea);
 
         camera.setToOrtho(false, Global.WIDTH, Global.HEIGHT);
-        camera.setWorldBounds(0,0,world.getMapWidth()*32,world.getMapHeight()*32);
 
         LogisticsForeman.running = true;
     }
@@ -78,9 +79,6 @@ public class GamePlayScreen implements Screen {
         cameraScroll.update(delta);
         world.update(delta);
         hudArea.act(delta);
-
-        if(gameInput.getSelected() != null)
-            HudController.getInstance().setToolTip(gameInput.getSelected().toString());
 
         batch.begin();
             batch.setProjectionMatrix(camera.combined);
@@ -133,11 +131,12 @@ public class GamePlayScreen implements Screen {
             selectionBox.begin(ShapeRenderer.ShapeType.Filled);
             selectionBox.setColor(new Color((float)53/255, (float)125/255, (float)173/255, 0.5f));
 
+            Rectangle rec = gameInput.getClickRect();
             selectionBox.rect(
-                    gameInput.getClickRect().x,
-                    gameInput.getClickRect().y,
-                    gameInput.getClickRect().width,
-                    gameInput.getClickRect().height
+                    rec.x,
+                    rec.y,
+                    rec.width,
+                    rec.height
             );
 
             selectionBox.end();

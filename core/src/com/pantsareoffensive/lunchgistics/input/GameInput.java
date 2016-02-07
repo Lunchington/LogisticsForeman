@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.pantsareoffensive.lunchgistics.object.Box;
 import com.pantsareoffensive.lunchgistics.object.GameObject;
 import com.pantsareoffensive.lunchgistics.object.Skid;
 import com.pantsareoffensive.lunchgistics.object.Worker;
@@ -39,7 +40,9 @@ public class GameInput extends InputAdapter {
             case Input.Keys.NUM_2:
                 map.add(new Skid(), new Vector2(Gdx.input.getX(), Gdx.input.getY()));
                 return true;
-
+            case Input.Keys.NUM_3:
+                map.add(new Box(), new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+                return true;
             default:
                 return false;
         }
