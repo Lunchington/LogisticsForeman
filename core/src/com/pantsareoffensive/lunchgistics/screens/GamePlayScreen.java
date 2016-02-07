@@ -11,14 +11,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.*;
 import com.pantsareoffensive.lunchgistics.Global;
 import com.pantsareoffensive.lunchgistics.LogisticsForeman;
 import com.pantsareoffensive.lunchgistics.controllers.HudController;
 import com.pantsareoffensive.lunchgistics.input.CameraScroll;
-import com.pantsareoffensive.lunchgistics.input.GameCamera;
 import com.pantsareoffensive.lunchgistics.input.GameInput;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
 import com.pantsareoffensive.lunchgistics.managers.PreferencesManager;
@@ -51,8 +49,8 @@ public class GamePlayScreen implements Screen {
         viewport = new FitViewport(Global.WIDTH, Global.HEIGHT, camera);
         hudArea = new Stage(new StretchViewport(Global.WIDTH, Global.HEIGHT));
         world = new GameMap(viewport);
-        cameraScroll = new CameraScroll(world);
         gameInput = new GameInput(world);
+        cameraScroll = new CameraScroll(world,gameInput);
 
         HudController.getInstance().init(hudArea);
 
@@ -130,6 +128,7 @@ public class GamePlayScreen implements Screen {
 
             selectionBox.begin(ShapeRenderer.ShapeType.Filled);
             selectionBox.setColor(new Color((float)53/255, (float)125/255, (float)173/255, 0.5f));
+            System.out.println(gameInput.getClicked() + " -- " + gameInput.getClickRect());
 
             Rectangle rec = gameInput.getClickRect();
             selectionBox.rect(

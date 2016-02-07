@@ -59,7 +59,7 @@ public class GameInput extends InputAdapter {
     @Override
     public boolean touchDown (int x, int y, int pointer, int button) {
         if (button == Input.Buttons.LEFT) {
-            clicked = new Vector2(x,y);
+            clicked = map.getView().unproject(new Vector2(x,y));
             selected = map.getObjectAtMouse(clicked);
             clickRect = calcClickRect(x,y);
             return true;
@@ -87,10 +87,15 @@ public class GameInput extends InputAdapter {
     }
 
     public Vector2 getClicked() { return clicked;}
+
     public GameObject getSelected() { return selected;}
 
+    public Rectangle calcClickRect() {
+        return calcClickRect(Gdx.input.getX(), Gdx.input.getY());
+    }
+
     public Rectangle calcClickRect(int screenX, int screenY) {
-        Vector3 newVec = map.getView().unproject(new Vector3(getClicked(), 0));
+        Vector3 newVec = new Vector3(getClicked(), 0);
         Vector3 mPos = map.getView().unproject(new Vector3(screenX, screenY, 0));
         Vector3 drawVec = newVec.cpy();
 
@@ -117,4 +122,5 @@ public class GameInput extends InputAdapter {
     }
 
 
+    public void setClickedRect() { clickRect = calcClickRect(); }
 }

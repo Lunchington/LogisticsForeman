@@ -13,18 +13,20 @@ import com.pantsareoffensive.lunchgistics.map.GameMap;
 public class CameraScroll extends InputAdapter{
     private GameMap map;
     private OrthographicCamera camera;
+    private GameInput input;
     private Vector2 move = new Vector2(0,0);
 
     public float zoomSpeed = 0.2f;
 
     private float zoomAmt = 1f;
-    private float minZoom = 0.1f;
+    private float minZoom = 0.2f;
     private float maxZoom = 1f;
     float scrollSpeed = 500f;
 
 
-    public CameraScroll(GameMap map) {
+    public CameraScroll(GameMap map, GameInput input) {
         this.map = map;
+        this.input = input;
         this.camera = (OrthographicCamera) map.getView().getCamera();
     }
 
@@ -88,6 +90,10 @@ public class CameraScroll extends InputAdapter{
 
 
         Vector2 movement = move.cpy().nor().scl(scrollSpeed * delta);
+
+        if(input.getClicked() != null) {
+            input.setClickedRect();
+        }
 
         camera.translate(movement.x , movement.y);
         attemptZoom(zoomAmt);
