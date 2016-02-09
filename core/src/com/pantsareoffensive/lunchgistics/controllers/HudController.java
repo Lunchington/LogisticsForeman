@@ -28,6 +28,11 @@ public class HudController {
     }
 
 
+    public void update() {
+        this.toolTip.setPosition(this.stage.getViewport().getScreenWidth() / 2- this.toolTip.getWidth()/2, 0);
+
+    }
+
 
 
     public void setToolTip(String text) {

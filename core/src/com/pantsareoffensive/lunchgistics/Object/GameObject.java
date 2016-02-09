@@ -2,12 +2,14 @@ package com.pantsareoffensive.lunchgistics.object;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class GameObject {
     protected int ID;
     protected String name;
     protected Vector2 position;
+    protected Rectangle bounds;
 
     protected float width;
     protected float height;
@@ -22,13 +24,12 @@ public abstract class GameObject {
         this.height = texture.getRegionHeight();
     }
 
-    public GameObject(TextureRegion texture, Vector2 pos) {
-        this(texture);
+    public void setPosition(Vector2 pos) {
         this.position = pos;
+        this.bounds = new Rectangle(position.x,position.y,width,height);
     }
 
 
-    public void setPosition(Vector2 pos) { this.position = pos; }
     public Vector2 getPosition() { return this.position; }
 
     public float getX() {
@@ -40,6 +41,10 @@ public abstract class GameObject {
 
     public float getWidth() {return width; }
     public float getHeight() {return height; }
+
+    public Rectangle getBounds() {
+        return new Rectangle(position.x,position.y,width,height);
+    }
 
     public boolean getSelected() { return selected; }
     public void setSelected(boolean b) { this.selected = b; }
@@ -63,4 +68,7 @@ public abstract class GameObject {
         return this.ID + " " + this.name + " " + this.position;
     }
 
+    public boolean isInBounds(GameObject g) {
+            return bounds.overlaps(g.getBounds());
+    }
 }

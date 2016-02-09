@@ -38,23 +38,25 @@ public class GamePlayScreen implements Screen {
     private ShapeRenderer selectionBox = new ShapeRenderer();
 
 
-    private OrthographicCamera camera;
+    private OrthographicCamera gameCamera;
     private Viewport viewport;
 
     public GamePlayScreen() {
         font = new BitmapFont();
         batch = new SpriteBatch();
 
-        camera = new OrthographicCamera(Global.WIDTH, Global.HEIGHT);
-        viewport = new FitViewport(Global.WIDTH, Global.HEIGHT, camera);
-        hudArea = new Stage(new StretchViewport(Global.WIDTH, Global.HEIGHT));
+        gameCamera = new OrthographicCamera();
+        viewport = new ScreenViewport(gameCamera);
+
+        hudArea = new Stage(new ScreenViewport());
+
         world = new GameMap(viewport);
         gameInput = new GameInput(world);
         cameraScroll = new CameraScroll(world,gameInput);
 
         HudController.getInstance().init(hudArea);
 
-        camera.setToOrtho(false, Global.WIDTH, Global.HEIGHT);
+        gameCamera.setToOrtho(false, Global.WIDTH, Global.HEIGHT);
 
         LogisticsForeman.running = true;
     }
@@ -63,7 +65,6 @@ public class GamePlayScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(new InputMultiplexer(cameraScroll, gameInput, hudArea));
-
         if(PreferencesManager.getInstance().isMusicEnabled())
             MusicManager.getInstance().play(MusicManager.GameMusic.GAME);
     }
@@ -79,7 +80,7 @@ public class GamePlayScreen implements Screen {
         hudArea.act(delta);
 
         batch.begin();
-            batch.setProjectionMatrix(camera.combined);
+            batch.setProjectionMatrix(gameCamera.combined);
             world.render(batch);
 
         batch.end();
@@ -93,8 +94,10 @@ public class GamePlayScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        hudArea.getViewport().update(width, height, false);
+        hudArea.getViewport().update(width, height, true);
+        HudController.getInstance().update();
         viewport.update(width, height);
+
     }
 
     @Override
@@ -124,11 +127,10 @@ public class GamePlayScreen implements Screen {
             Gdx.gl.glEnable(GL20.GL_BLEND);
             Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-            selectionBox.setProjectionMatrix(camera.combined);
+            selectionBox.setProjectionMatrix(gameCamera.combined);
 
             selectionBox.begin(ShapeRenderer.ShapeType.Filled);
             selectionBox.setColor(new Color((float)53/255, (float)125/255, (float)173/255, 0.5f));
-            System.out.println(gameInput.getClicked() + " -- " + gameInput.getClickRect());
 
             Rectangle rec = gameInput.getClickRect();
             selectionBox.rect(

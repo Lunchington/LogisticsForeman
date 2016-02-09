@@ -95,9 +95,9 @@ public class GameInput extends InputAdapter {
     }
 
     public Rectangle calcClickRect(int screenX, int screenY) {
-        Vector3 newVec = new Vector3(getClicked(), 0);
-        Vector3 mPos = map.getView().unproject(new Vector3(screenX, screenY, 0));
-        Vector3 drawVec = newVec.cpy();
+        Vector2 newVec = getClicked().cpy();
+        Vector2 mPos = map.getView().unproject(new Vector2(screenX, screenY));
+        Vector2 drawVec = newVec.cpy();
 
         float w;
         float h;

@@ -69,12 +69,25 @@ public class GameMap {
     }
 
     public void add(GameObject e, Vector2 pos) {
-        Vector3 newV = view.unproject(new Vector3(pos.x, pos.y,0));
+
+        Vector2 newV = view.unproject(pos);
         e.setPosition(new Vector2(newV.x-16,newV.y-16));
+
+        if (isOverlapping(e))
+            return;
+
         gameObjects.add(e);
         if (e instanceof Entity) {
             entities.add((Entity) e);
         }
+    }
+
+    private boolean isOverlapping(GameObject e) {
+        for (GameObject g: gameObjects) {
+            if (g.isInBounds(e))
+                    return true;
+        }
+        return false;
     }
 
     public ArrayList<GameObject> getObjects() {
@@ -92,7 +105,6 @@ public class GameMap {
 
     public GameObject getObjectAtMouse(Vector2 clicked) {
         Vector2 v = clicked.cpy();
-        view.unproject(v);
         for (GameObject g: gameObjects) {
             if (g.isInBounds(v)) {
                 HudController.getInstance().setToolTip(g.toString());
