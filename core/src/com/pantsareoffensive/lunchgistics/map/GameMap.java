@@ -68,10 +68,7 @@ public class GameMap {
 
     }
 
-    public void add(GameObject e, Vector2 pos) {
-
-        Vector2 newV = view.unproject(pos);
-        e.setPosition(new Vector2(newV.x-16,newV.y-16));
+    public void add(GameObject e) {
 
         if (isOverlapping(e))
             return;

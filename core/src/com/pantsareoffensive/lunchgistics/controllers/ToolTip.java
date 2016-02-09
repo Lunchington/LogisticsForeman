@@ -6,11 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 
 public class ToolTip extends Label {
-	public ToolTip(float centerX, float y) {
+	public ToolTip() {
 		super("", new LabelStyle(new BitmapFont(), Color.WHITE));
-		setSize(300, 30);
-		setPosition(centerX - getWidth() / 2, y);
-		setAlignment(Align.center);
+		setAlignment(Align.center, Align.center);
+
 	}
 
 }

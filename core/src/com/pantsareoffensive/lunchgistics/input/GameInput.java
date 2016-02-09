@@ -7,10 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.pantsareoffensive.lunchgistics.object.Box;
-import com.pantsareoffensive.lunchgistics.object.GameObject;
-import com.pantsareoffensive.lunchgistics.object.Skid;
-import com.pantsareoffensive.lunchgistics.object.Worker;
+import com.pantsareoffensive.lunchgistics.object.*;
 import com.pantsareoffensive.lunchgistics.managers.ScreenManager;
 import com.pantsareoffensive.lunchgistics.map.GameMap;
 
@@ -28,20 +25,25 @@ public class GameInput extends InputAdapter {
 
     @Override
     public boolean keyUp(int key) {
-
+        Vector2 pos = map.getView().unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
         switch (key) {
             case Input.Keys.ESCAPE:
                 ScreenManager.getInstance().show(ScreenManager.GameScreens.MAIN_MENU);
                 return true;
             case Input.Keys.NUM_1:
-                map.add(new Worker(), new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+                map.add(new Worker(pos));
                 return true;
 
             case Input.Keys.NUM_2:
-                map.add(new Skid(), new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+                map.add(new Skid(pos));
                 return true;
             case Input.Keys.NUM_3:
-                map.add(new Box(), new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+                map.add(new BoxSmall(pos));
+            case Input.Keys.NUM_4:
+                map.add(new BoxMedium(pos));
+                return true;
+            case Input.Keys.NUM_5:
+                map.add(new BoxLarge(pos));
                 return true;
             default:
                 return false;

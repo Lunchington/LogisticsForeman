@@ -2,17 +2,19 @@ package com.pantsareoffensive.lunchgistics.object;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.pantsareoffensive.lunchgistics.Global;
 import com.pantsareoffensive.lunchgistics.utils.RandomNames;
 
 
 public class Worker extends Entity {
 
-    public Worker() {
-        super(Global.Art.WORKER_ATLAS.findRegion("head_f"));
+    public Worker(Vector2 pos) {
+        super(Global.Art.WORKER_ATLAS.findRegion("head_f"),pos);
         this.atlas = (Global.Art.WORKER_ATLAS);
         this.region ="f";
         this.name = RandomNames.getInstance().getName();
+        this.objWidth = 20;
     }
 
     @Override

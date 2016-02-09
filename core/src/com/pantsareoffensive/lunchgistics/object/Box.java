@@ -1,14 +1,31 @@
 package com.pantsareoffensive.lunchgistics.object;
 
-import com.pantsareoffensive.lunchgistics.Global;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
-public class Box extends GameObject {
-    public Box() {
-        super(Global.Art.ITEMS_ATLAS.findRegion("box_s"));
+public class Box extends GameObject implements IInventoryObject{
+    public Box(TextureRegion texture, Vector2 pos) {
+       super(texture,pos);
     }
+
 
     @Override
     public String toString() {
-        return "Small Box";
+        return this.name;
+    }
+
+    @Override
+    public int getSize() {
+        return 0;
+    }
+
+    @Override
+    public boolean canMovebyHand() {
+        return true;
+    }
+
+    @Override
+    public int getWeight() {
+        return 0;
     }
 }

@@ -33,7 +33,6 @@ public class GamePlayScreen implements Screen {
     private CameraScroll cameraScroll;
     private GameInput gameInput;
 
-    private BitmapFont font;
     private SpriteBatch batch;
     private ShapeRenderer selectionBox = new ShapeRenderer();
 
@@ -42,7 +41,6 @@ public class GamePlayScreen implements Screen {
     private Viewport viewport;
 
     public GamePlayScreen() {
-        font = new BitmapFont();
         batch = new SpriteBatch();
 
         gameCamera = new OrthographicCamera();
@@ -65,6 +63,7 @@ public class GamePlayScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(new InputMultiplexer(cameraScroll, gameInput, hudArea));
+        hudArea.setDebugAll(true);
         if(PreferencesManager.getInstance().isMusicEnabled())
             MusicManager.getInstance().play(MusicManager.GameMusic.GAME);
     }
@@ -94,9 +93,8 @@ public class GamePlayScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        hudArea.getViewport().update(width, height, true);
-        HudController.getInstance().update();
         viewport.update(width, height);
+        hudArea.getViewport().update(width, height, true);
 
     }
 

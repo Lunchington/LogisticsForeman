@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
 import com.pantsareoffensive.lunchgistics.managers.PreferencesManager;
 
@@ -19,7 +20,7 @@ public class BaseMenuScreen implements Screen {
     public Skin skin;
 
     public BaseMenuScreen() {
-        stage = new Stage();
+        stage = new Stage(new ScreenViewport());
 
         skin = new Skin(Gdx.files.internal("gui/gui.json"));
         table = new Table(skin);

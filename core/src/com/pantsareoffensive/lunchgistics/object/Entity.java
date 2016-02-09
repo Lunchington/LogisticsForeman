@@ -13,8 +13,8 @@ public class Entity extends GameObject{
     protected TextureAtlas atlas;
     protected String region;
 
-    public Entity(TextureRegion texture) {
-        super(texture);
+    public Entity(TextureRegion texture, Vector2 pos) {
+        super(texture, pos);
     }
 
     @Override
