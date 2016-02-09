@@ -3,8 +3,12 @@ apply plugin: "java"
 sourceCompatibility = 1.6
 sourceSets.main.java.srcDirs = [ "src/" ]
 
-project.ext.mainClassName = "com.pantsareoffensive.lunchgistics.desktop.DesktopLauncher"
-project.ext.assetsDir = new File("../core/assets");
+project.ext {
+    mainClassName = "com.pantsareoffensive.lunchgistics.desktop.DesktopLauncher"
+    assetsDir = new File("../core/assets");
+    texturePacker = ["../core/assets/IMGSRC/gui", "../core/assets/gui", "gui"]
+
+}
 
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
@@ -45,4 +49,12 @@ task afterEclipseImport(description: "Post processing after project generation",
     printer.setPreserveWhitespace(true)
     printer.print(classpath)
   }
+}
+
+import com.badlogic.gdx.tools.texturepacker.TexturePacker
+task texturePacker << {
+    if (project.ext.has('texturePacker')) {
+        logger.info "Calling TexturePacker: "+texturePacker
+        TexturePacker.process(texturePacker[0], texturePacker[1], texturePacker[2])
+    }
 }

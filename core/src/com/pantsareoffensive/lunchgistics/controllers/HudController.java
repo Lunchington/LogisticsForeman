@@ -52,9 +52,7 @@ public class HudController {
         stage.addActor(bottomTable);
 
         this.toolTip = new ToolTip();
-        this.bottomTable.add("TEST");
-        this.bottomTable.add(this.toolTip);
-        this.bottomTable.add("test 2").align(Align.right);
+        this.bottomTable.add(this.toolTip).center();
 
 
 

@@ -4,6 +4,8 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
+        classpath  "com.badlogicgames.gdx:gdx-tools:1.7.0"
+
     }
 }
 
