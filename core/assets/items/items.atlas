@@ -53,7 +53,7 @@ skid_s
   orig: 32, 32
   offset: 0, 0
   index: -1
-skids_t
+skid_t
   rotate: false
   xy: 240, 2
   size: 32, 32

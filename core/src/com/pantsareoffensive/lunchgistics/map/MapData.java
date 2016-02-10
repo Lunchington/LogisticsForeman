@@ -89,7 +89,7 @@ public class MapData {
         return tile == type;
     }
 
-    public boolean isTileAdjacentsameType(int x, int y, int direction, Tile isType) {
+    public boolean isTileAdjacentSameType(int x, int y, int direction, Tile isType) {
         Tile checkTile = getTileAdjacent(x,y,direction);
         return checkTile != null && isType(checkTile, isType);
     }
@@ -111,45 +111,43 @@ public class MapData {
 
         int value = 0;
 
-        if(isTileAdjacentsameType(x,y,TileValue.NorthWest,t)) {
-            if (isTileAdjacentsameType(x-1,y+1,TileValue.East,t) && isTileAdjacentsameType(x-1,y+1,TileValue.South,t))
+        if(isTileAdjacentSameType(x,y,TileValue.NorthWest,t)) {
+            if (isTileAdjacentSameType(x-1,y+1,TileValue.East,t) && isTileAdjacentSameType(x-1,y+1,TileValue.South,t))
                 value += TileValue.NorthWest;
         }
 
-        if(isTileAdjacentsameType(x,y,TileValue.North,t))
+        if(isTileAdjacentSameType(x,y,TileValue.North,t))
             value += TileValue.North;
 
-        if(isTileAdjacentsameType(x,y,TileValue.NorthEast,t)) {
-            if (isTileAdjacentsameType(x + 1, y + 1, TileValue.West, t) && isTileAdjacentsameType(x + 1, y + 1, TileValue.South, t))
+        if(isTileAdjacentSameType(x,y,TileValue.NorthEast,t)) {
+            if (isTileAdjacentSameType(x + 1, y + 1, TileValue.West, t) && isTileAdjacentSameType(x + 1, y + 1, TileValue.South, t))
                 value += TileValue.NorthEast;
         }
 
-        if(isTileAdjacentsameType(x,y,TileValue.West,t))
+        if(isTileAdjacentSameType(x,y,TileValue.West,t))
             value += TileValue.West;
 
-        if(isTileAdjacentsameType(x,y,TileValue.East,t))
+        if(isTileAdjacentSameType(x,y,TileValue.East,t))
             value += TileValue.East;
 
 
-        if(isTileAdjacentsameType(x,y,TileValue.SouthWest,t)) {
-            if (isTileAdjacentsameType(x - 1, y - 1, TileValue.East, t) && isTileAdjacentsameType(x - 1, y - 1, TileValue.North, t))
+        if(isTileAdjacentSameType(x,y,TileValue.SouthWest,t)) {
+            if (isTileAdjacentSameType(x - 1, y - 1, TileValue.East, t) && isTileAdjacentSameType(x - 1, y - 1, TileValue.North, t))
                 value += TileValue.SouthWest;
         }
 
-        if(isTileAdjacentsameType(x,y,TileValue.South,t))
+        if(isTileAdjacentSameType(x,y,TileValue.South,t))
             value += TileValue.South;
 
-        if(isTileAdjacentsameType(x,y,TileValue.SouthEast,t)) {
-            if (isTileAdjacentsameType(x + 1, y - 1, TileValue.West, t) && isTileAdjacentsameType(x + 1, y - 1, TileValue.North, t))
+        if(isTileAdjacentSameType(x,y,TileValue.SouthEast,t)) {
+            if (isTileAdjacentSameType(x + 1, y - 1, TileValue.West, t) && isTileAdjacentSameType(x + 1, y - 1, TileValue.North, t))
                 value += TileValue.SouthEast;
         }
 
         return value;
     }
 
-    public void setTile(Vector2 pos, Tile t) {
-        int x = (int) (pos.x / 32);
-        int y = (int) (pos.y / 32);
+    public void setTile(int x, int y, Tile t) {
         tiles[x][y] = t;
     }
 }

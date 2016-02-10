@@ -5,7 +5,7 @@ public interface IInventoryObject {
     int getSize();
 
     //can you move it by hand?
-    boolean canMovebyHand();
+    boolean canMoveByHand();
 
     //how heavy is it?
     int getWeight();

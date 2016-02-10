@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.*;
 import com.pantsareoffensive.lunchgistics.Global;
 import com.pantsareoffensive.lunchgistics.Main;
@@ -23,7 +22,6 @@ public class GamePlayScreen extends AbstractScreen {
     private GameMap world;
 
     private HudController hudController;
-    private Stage hudArea;
 
     private CameraScroll cameraScroll;
     private GameInput gameInput;
@@ -37,8 +35,7 @@ public class GamePlayScreen extends AbstractScreen {
         gameCamera = new OrthographicCamera();
         viewport = new ScreenViewport(gameCamera);
 
-        hudArea = new Stage(new ScreenViewport());
-        hudController = new HudController(hudArea);
+        hudController = new HudController(stage);
 
         world = new GameMap(viewport);
         gameInput = new GameInput(game,this);
@@ -53,7 +50,7 @@ public class GamePlayScreen extends AbstractScreen {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(new InputMultiplexer(cameraScroll, gameInput, hudArea));
+        Gdx.input.setInputProcessor(new InputMultiplexer(cameraScroll, gameInput, stage));
 
         if(game.preferencesManager.isMusicEnabled())
             game.musicManager.play(MusicManager.GameMusic.GAME);
@@ -61,14 +58,13 @@ public class GamePlayScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-
-        hudArea.setDebugAll(Main.DEV_MODE);
-
         super.render(delta);
+
+        stage.setDebugAll(Main.DEV_MODE);
 
         cameraScroll.update(delta);
         world.update(delta);
-        hudArea.act(delta);
+        stage.act(delta);
 
         game.batch.begin();
             game.batch.setProjectionMatrix(gameCamera.combined);
@@ -78,7 +74,7 @@ public class GamePlayScreen extends AbstractScreen {
 
         drawSelection();
 
-        hudArea.draw();
+        stage.draw();
 
 
     }
@@ -110,8 +106,8 @@ public class GamePlayScreen extends AbstractScreen {
 
     @Override
     public void resize(int width, int height) {
+        super.resize(width,height);
         viewport.update(width, height);
-        hudArea.getViewport().update(width, height, true);
 
     }
 
@@ -132,7 +128,7 @@ public class GamePlayScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        hudArea.dispose();
+        super.dispose();
     }
 
 }

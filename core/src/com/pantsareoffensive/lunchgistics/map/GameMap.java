@@ -2,9 +2,9 @@ package com.pantsareoffensive.lunchgistics.map;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.pantsareoffensive.lunchgistics.controllers.HudController;
 import com.pantsareoffensive.lunchgistics.object.Entity;
 import com.pantsareoffensive.lunchgistics.object.GameObject;
 
@@ -68,8 +68,10 @@ public class GameMap {
 
     public void add(GameObject e) {
 
-        if (isOverlapping(e))
+        if (isOverlapping(e)) {
+            e.dispose();
             return;
+        }
 
         gameObjects.add(e);
         if (e instanceof Entity) {
@@ -77,7 +79,28 @@ public class GameMap {
         }
     }
 
+    private boolean isCollideWithTile(Rectangle r) {
+        int minX = (int) r.x /32;
+        int minY = (int) r.y /32;
+
+        int maxX = ((int) r.x + (int) r.getWidth()) /32;
+        int maxY = ((int) r.y + (int) r.getHeight()) /32;
+
+
+        Tile tLeft = mapData.getTile(minX,maxY);
+        Tile tRight = mapData.getTile(maxX,maxY);
+
+        Tile bLeft = mapData.getTile(minX,minY);
+        Tile bRight = mapData.getTile(maxX,minY);
+
+        return (!tLeft.getPassable() || !tRight.getPassable() || !bLeft.getPassable() || !bRight.getPassable());
+
+    }
+
     private boolean isOverlapping(GameObject e) {
+        if (isCollideWithTile(e.getBounds()))
+            return true;
+
         for (GameObject g: gameObjects) {
             if (g.isInBounds(e))
                     return true;
@@ -114,6 +137,12 @@ public class GameMap {
 
     public MapData getMapData() {
         return mapData;
+    }
+
+    public void setTile(Vector2 pos, Tile tile) {
+        int x = (int) (pos.x / 32);
+        int y = (int) (pos.y / 32);
+        mapData.setTile(x,y,tile);
     }
 
 }

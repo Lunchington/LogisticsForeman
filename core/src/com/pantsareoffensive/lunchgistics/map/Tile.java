@@ -4,24 +4,29 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.pantsareoffensive.lunchgistics.Global;
 
 public enum Tile {
-    DIRT(Global.Art.TILES_ATLAS.findRegion("dirt")),
-    EDGE(Global.Art.TILES_ATLAS.findRegion("edge")),
-    GRASS(Global.Art.TILES_ATLAS.findRegion("grass")),
-    ROAD(Global.Art.TILES_ATLAS.findRegion("road")),
-    WALL();
+    DIRT,
+    EDGE,
+    GRASS,
+    ROAD,
+    WALL;
 
-
-    protected int id;
-    protected boolean passable;
-    protected TextureRegion region;
-
-    Tile (TextureRegion region) {
-        this.region = region;
-    }
-    Tile() {}
 
     public TextureRegion getTexture() {
-        return this.region;
+
+        switch (this) {
+            case DIRT:
+                return Global.Art.TILES_ATLAS.findRegion("dirt");
+            case EDGE:
+                return Global.Art.TILES_ATLAS.findRegion("edge");
+            case GRASS:
+                return Global.Art.TILES_ATLAS.findRegion("grass");
+            case ROAD:
+                return Global.Art.TILES_ATLAS.findRegion("road");
+            default:
+                return null;
+        }
     }
+
+    public boolean getPassable() { return this != WALL; }
 
 }

@@ -6,22 +6,17 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.pantsareoffensive.lunchgistics.Main;
 import com.pantsareoffensive.lunchgistics.managers.ScreenManager.STATE;
 
 public class SplashScreen extends AbstractScreen {
 
-    private Stage stage;
 
     public SplashScreen(Main game) {
         super(game);
-        stage = new Stage();
     }
 
     @Override
@@ -43,15 +38,15 @@ public class SplashScreen extends AbstractScreen {
     }
 
     @Override
-    public void render(float _delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    public void render(float delta) {
+        super.render(delta);
         stage.act();
         stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
+        super.resize(width,height);
 
     }
 
@@ -72,7 +67,7 @@ public class SplashScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-
+        super.dispose();
     }
 
 }

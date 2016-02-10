@@ -68,7 +68,7 @@ public class BasicInventory extends GameObject implements IStorage {
     }
 
     @Override
-    public boolean canMovebyHand() {
+    public boolean canMoveByHand() {
         return true;
     }
 
@@ -76,4 +76,5 @@ public class BasicInventory extends GameObject implements IStorage {
     public int getWeight() {
         return 0;
     }
+
 }

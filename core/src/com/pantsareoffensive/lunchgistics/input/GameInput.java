@@ -51,7 +51,7 @@ public class GameInput extends InputAdapter {
                 map.add(new BoxLarge(pos));
                 return true;
             case Input.Keys.NUM_6:
-                map.getMapData().setTile(pos,Tile.WALL);
+                map.setTile(pos,Tile.WALL);
                 return true;
             case Input.Keys.F5:
                 game.toggleDevMode();
@@ -72,12 +72,20 @@ public class GameInput extends InputAdapter {
     public boolean touchDown (int x, int y, int pointer, int button) {
         if (button == Input.Buttons.LEFT) {
             clicked = map.getView().unproject(new Vector2(x,y));
-            selected = map.getObjectAtMouse(clicked);
-            clickRect = calcClickRect(x,y);
-            String t ="";
 
-            if(selected != null)
-                t =selected.toString();
+            GameObject oldSelected = selected;
+            selected = map.getObjectAtMouse(clicked);
+
+            clickRect = calcClickRect(x,y);
+
+            if(oldSelected != null)
+                oldSelected.setSelected(false);
+
+            String t ="";
+            if(selected != null) {
+                selected.setSelected(true);
+                t = selected.toString();
+            }
 
             screen.getHud().setToolTip(t);
             return true;

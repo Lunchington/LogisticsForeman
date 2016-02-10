@@ -4,8 +4,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 
-public abstract class GameObject {
+public abstract class GameObject implements Disposable{
     protected int ID;
     protected String name;
     protected Vector2 position;
@@ -30,27 +31,11 @@ public abstract class GameObject {
         this.bounds = new Rectangle(position.x,position.y,width,height);
     }
 
-    public GameObject() {}
-
-    public void setTexture(TextureRegion texture) {
-        this.texture = texture;
-        this.width = texture.getRegionWidth();
-        this.height = texture.getRegionHeight();
-
-    }
-
-    public void setPosition(Vector2 pos) {
-        this.position = new Vector2(pos.x - width/2, pos.y - height/2);
-        this.bounds = new Rectangle(position.x,position.y,width,height);
-    }
 
     public void setObjSize(int w,int h) {
         this.objWidth = w;
         this.objHeight = h;
     }
-
-
-    public Vector2 getPosition() { return this.position; }
 
     public float getX() {
         return position.x;
@@ -105,5 +90,10 @@ public abstract class GameObject {
 
     public boolean isInBounds(GameObject g) {
             return getBounds().overlaps(g.getBounds());
+    }
+
+    @Override
+    public void dispose() {
+
     }
 }

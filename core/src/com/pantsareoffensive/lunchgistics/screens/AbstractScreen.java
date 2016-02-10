@@ -3,16 +3,18 @@ package com.pantsareoffensive.lunchgistics.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.pantsareoffensive.lunchgistics.Main;
-import com.pantsareoffensive.lunchgistics.managers.ScreenManager;
 
 public abstract class AbstractScreen implements Screen {
     protected final Main game;
+    protected Stage stage;
 
     public AbstractScreen(Main game) {
         this.game = game;
+        this.stage = new Stage(new ScreenViewport());
     }
     
     @Override
@@ -22,13 +24,13 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
     @Override
     public void resize(int width, int height) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -48,7 +50,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
     
 }

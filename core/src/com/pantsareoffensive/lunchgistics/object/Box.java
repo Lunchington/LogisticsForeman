@@ -3,7 +3,7 @@ package com.pantsareoffensive.lunchgistics.object;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-public class Box extends GameObject implements IInventoryObject{
+public abstract class Box extends GameObject implements IInventoryObject{
     public Box(TextureRegion texture, Vector2 pos) {
        super(texture,pos);
     }
@@ -20,7 +20,7 @@ public class Box extends GameObject implements IInventoryObject{
     }
 
     @Override
-    public boolean canMovebyHand() {
+    public boolean canMoveByHand() {
         return true;
     }
 
@@ -28,4 +28,5 @@ public class Box extends GameObject implements IInventoryObject{
     public int getWeight() {
         return 0;
     }
+
 }
