@@ -5,22 +5,28 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.pantsareoffensive.lunchgistics.Main;
+import com.pantsareoffensive.lunchgistics.managers.ScreenManager.STATE;
+import com.pantsareoffensive.lunchgistics.map.Tile;
 import com.pantsareoffensive.lunchgistics.object.*;
-import com.pantsareoffensive.lunchgistics.managers.ScreenManager;
 import com.pantsareoffensive.lunchgistics.map.GameMap;
+import com.pantsareoffensive.lunchgistics.screens.GamePlayScreen;
 
 public class GameInput extends InputAdapter {
-    private GameMap map;
+    private GamePlayScreen screen;
 
     private Vector2 clicked;
     private GameObject selected;
 
     private Rectangle clickRect;
 
-    public GameInput(GameMap map) {
-        this.map = map;
+    private Main game;
+    private GameMap map;
+
+    public GameInput(Main game, GamePlayScreen screen) {
+        this.game = game;
+        this.screen = screen;
+        this.map = screen.getWorld();
     }
 
     @Override
@@ -28,12 +34,11 @@ public class GameInput extends InputAdapter {
         Vector2 pos = map.getView().unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
         switch (key) {
             case Input.Keys.ESCAPE:
-                ScreenManager.getInstance().show(ScreenManager.GameScreens.MAIN_MENU);
+                game.screenManager.setScreen(STATE.MAINMENU);
                 return true;
             case Input.Keys.NUM_1:
                 map.add(new Worker(pos));
                 return true;
-
             case Input.Keys.NUM_2:
                 map.add(new Skid(pos));
                 return true;
@@ -45,6 +50,11 @@ public class GameInput extends InputAdapter {
             case Input.Keys.NUM_5:
                 map.add(new BoxLarge(pos));
                 return true;
+            case Input.Keys.NUM_6:
+                map.getMapData().setTile(pos,Tile.WALL);
+                return true;
+            case Input.Keys.F5:
+                game.toggleDevMode();
             default:
                 return false;
         }
@@ -64,6 +74,12 @@ public class GameInput extends InputAdapter {
             clicked = map.getView().unproject(new Vector2(x,y));
             selected = map.getObjectAtMouse(clicked);
             clickRect = calcClickRect(x,y);
+            String t ="";
+
+            if(selected != null)
+                t =selected.toString();
+
+            screen.getHud().setToolTip(t);
             return true;
         }
         return false;

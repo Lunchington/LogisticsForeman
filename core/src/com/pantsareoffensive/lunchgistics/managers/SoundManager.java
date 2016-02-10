@@ -10,19 +10,6 @@ import com.pantsareoffensive.lunchgistics.utils.LRUCache.CacheEntryRemovedListen
 
 public class SoundManager implements CacheEntryRemovedListener<GameSound, Sound>, Disposable {
 
-    private static SoundManager INSTANCE = null;
-
-    public static SoundManager getInstance() {
-        if (INSTANCE == null) {
-            synchronized (SoundManager.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new SoundManager();
-                }
-            }
-        }
-        return INSTANCE;
-    }
-
     /**
      * The available sound files.
      */

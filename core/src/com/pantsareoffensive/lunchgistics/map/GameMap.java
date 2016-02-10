@@ -1,10 +1,8 @@
 package com.pantsareoffensive.lunchgistics.map;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pantsareoffensive.lunchgistics.controllers.HudController;
 import com.pantsareoffensive.lunchgistics.object.Entity;
@@ -13,22 +11,24 @@ import com.pantsareoffensive.lunchgistics.object.GameObject;
 import java.util.ArrayList;
 
 public class GameMap {
-    protected MapData map;
+    protected MapData mapData;
     protected ArrayList<GameObject> gameObjects =new ArrayList<GameObject>();
     protected ArrayList<Entity> entities =new ArrayList<Entity>();
+
+
 
     private  Viewport view;
 
 
-    public int getMapWidth() {return map.width; }
-    public int getMapHeight() {return map.height; }
+    public int getMapWidth() {return mapData.width; }
+    public int getMapHeight() {return mapData.height; }
 
-    public int getMapPixelWidth() {return map.width * 32; }
-    public int getMapPixelHeight() {return map.height * 32; }
+    public int getMapPixelWidth() {return getMapWidth()* 32; }
+    public int getMapPixelHeight() {return getMapHeight() * 32; }
 
     public GameMap(Viewport view) {
         this.view = view;
-        this.map = new MapData().getBlank(100,80);
+        this.mapData = new MapData().getBlank(100,80);
     }
 
     public void update(float delta ) {
@@ -47,15 +47,15 @@ public class GameMap {
         if (startY < 0) startY = 0;
 
         int endX = (int)(camera.position.x + camera.viewportWidth/2) / 32 +2;
-        if (endX > map.width) endX = map.width;
+        if (endX > mapData.width) endX = mapData.width;
 
         int endY = (int)(camera.position.y + camera.viewportHeight/2) / 32 + 2;
-        if (endY > map.height) endY = map.height;
+        if (endY > mapData.height) endY = mapData.height;
 
 
         for(int y = startY; y < endY; y++) {
             for (int x = startX; x < endX; x++) {
-                batch.draw(map.tiles[x][y].getTexture(), x*32, y*32);
+                batch.draw(mapData.getTileRegion(x,y), x * 32, y * 32);
             }
         }
 
@@ -64,8 +64,6 @@ public class GameMap {
                e.render(batch);
            }
         }
-
-
     }
 
     public void add(GameObject e) {
@@ -104,15 +102,18 @@ public class GameMap {
         Vector2 v = clicked.cpy();
         for (GameObject g: gameObjects) {
             if (g.isInBounds(v)) {
-                HudController.getInstance().setToolTip(g.toString());
                 return g;
             }
         }
-        HudController.getInstance().setToolTip("");
         return null;
     }
 
     public Viewport getView() {
         return view;
     }
+
+    public MapData getMapData() {
+        return mapData;
+    }
+
 }

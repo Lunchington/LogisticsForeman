@@ -1,11 +1,10 @@
 package com.pantsareoffensive.lunchgistics.desktop;
 
 import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.pantsareoffensive.lunchgistics.Global;
-import com.pantsareoffensive.lunchgistics.LogisticsForeman;
+import com.pantsareoffensive.lunchgistics.Main;
 
 public class DesktopLauncher {
     public static void main (String[] arg) {
@@ -24,6 +23,6 @@ public class DesktopLauncher {
         config.addIcon("icon64x64.png", Files.FileType.Internal);
         config.addIcon("icon128x128.png", Files.FileType.Internal);
 
-        new LwjglApplication(new LogisticsForeman(), config);
+        new LwjglApplication(new Main(), config);
     }
 }

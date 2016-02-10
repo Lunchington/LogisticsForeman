@@ -2,22 +2,26 @@ package com.pantsareoffensive.lunchgistics.screens.menus;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.pantsareoffensive.lunchgistics.managers.MusicManager;
+import com.pantsareoffensive.lunchgistics.Main;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager.GameMusic;
-import com.pantsareoffensive.lunchgistics.managers.PreferencesManager;
 import com.pantsareoffensive.lunchgistics.managers.SoundManager;
 import com.pantsareoffensive.lunchgistics.managers.SoundManager.GameSound;
-import com.pantsareoffensive.lunchgistics.managers.ScreenManager;
+import com.pantsareoffensive.lunchgistics.managers.ScreenManager.STATE;
 
 
 public class OptionsScreen extends BaseMenuScreen {
     private Label musicVolumeValue;
     private Label soundVolumeValue;
+
+    public OptionsScreen(Main game) {
+        super(game);
+    }
 
 
     @Override
@@ -32,26 +36,26 @@ public class OptionsScreen extends BaseMenuScreen {
         // Sound Check Box
         final CheckBox soundEffectsCheckbox = new CheckBox("", skin);
 
-        soundEffectsCheckbox.setChecked(PreferencesManager.getInstance().isSoundEnabled());
+        soundEffectsCheckbox.setChecked(game.preferencesManager.isSoundEnabled());
         soundEffectsCheckbox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 boolean enabled = soundEffectsCheckbox.isChecked();
-                PreferencesManager.getInstance().setSoundEnabled(enabled);
-                SoundManager.getInstance().setEnabled(enabled);
-                SoundManager.getInstance().play(GameSound.CLICK);
+                game.preferencesManager.setSoundEnabled(enabled);
+                game.soundManager.setEnabled(enabled);
+                game.soundManager.play(GameSound.CLICK);
             }
         });
 
         // Sound Slider
         Slider soundVolumeSlider = new Slider(0f, 1f, 0.1f, false, skin);
-        soundVolumeSlider.setValue(PreferencesManager.getInstance().getSoundVolume());
+        soundVolumeSlider.setValue(game.preferencesManager.getSoundVolume());
         soundVolumeSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 float value = ((Slider) actor).getValue();
-                PreferencesManager.getInstance().setSoundVolume(value);
-                SoundManager.getInstance().setVolume(value);
+                game.preferencesManager.setSoundVolume(value);
+                game.soundManager.setVolume(value);
                 updateSoundVolumeLabel();
             }
 
@@ -68,29 +72,29 @@ public class OptionsScreen extends BaseMenuScreen {
 
         // Music Check Box
         final CheckBox musicCheckbox = new CheckBox("", skin);
-        musicCheckbox.setChecked(PreferencesManager.getInstance().isMusicEnabled());
+        musicCheckbox.setChecked(game.preferencesManager.isMusicEnabled());
         musicCheckbox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 boolean enabled = musicCheckbox.isChecked();
-                PreferencesManager.getInstance().setMusicEnabled(enabled);
-                MusicManager.getInstance().setEnabled(enabled);
-                SoundManager.getInstance().play(GameSound.CLICK);
+                game.preferencesManager.setMusicEnabled(enabled);
+                game.musicManager.setEnabled(enabled);
+                game.soundManager.play(GameSound.CLICK);
 
                 // if the music is now enabled, start playing the menu music
-                if (enabled)MusicManager.getInstance().play(GameMusic.MENU);
+                if (enabled)game.musicManager.play(GameMusic.MENU);
             }
         });
 
         // Music Slider
         Slider musicVolumeSlider = new Slider(0f, 1f, 0.1f, false, skin);
-        musicVolumeSlider.setValue(PreferencesManager.getInstance().getMusicVolume());
+        musicVolumeSlider.setValue(game.preferencesManager.getMusicVolume());
         musicVolumeSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 float value = ((Slider) actor).getValue();
-                PreferencesManager.getInstance().setMusicVolume(value);
-                MusicManager.getInstance().setVolume(value);
+                game.preferencesManager.setMusicVolume(value);
+                game.musicManager.setVolume(value);
                 updateMusicVolumeLabel();
             }
 
@@ -107,11 +111,18 @@ public class OptionsScreen extends BaseMenuScreen {
 
         // back to Main
         TextButton backButton = new TextButton("Back to main menu", skin);
-        backButton.addListener(new MenuButton() {
+        backButton.addListener(new InputListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                ScreenManager.getInstance().show(ScreenManager.GameScreens.MAIN_MENU);
+                game.soundManager.play(SoundManager.GameSound.CLICK);
+                game.screenManager.setScreen(STATE.MAINMENU);
 
             }
         });
@@ -121,12 +132,12 @@ public class OptionsScreen extends BaseMenuScreen {
 
 
     private void updateMusicVolumeLabel() {
-        float volume = (PreferencesManager.getInstance().getMusicVolume() * 100);
+        float volume = (game.preferencesManager.getMusicVolume() * 100);
         musicVolumeValue.setText(String.format("%1.0f%%", volume));
     }
 
     private void updateSoundVolumeLabel() {
-        float volume = (PreferencesManager.getInstance().getSoundVolume() * 100);
+        float volume = (game.preferencesManager.getSoundVolume() * 100);
         soundVolumeValue.setText(String.format("%1.0f%%", volume));
     }
 }

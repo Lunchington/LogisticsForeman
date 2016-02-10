@@ -6,7 +6,7 @@ sourceSets.main.java.srcDirs = [ "src/" ]
 project.ext {
     mainClassName = "com.pantsareoffensive.lunchgistics.desktop.DesktopLauncher"
     assetsDir = new File("../core/assets");
-    texturePacker = ["../core/assets/IMGSRC/gui", "../core/assets/gui", "gui"]
+    texturePacker = ["../core/assets/IMGSRC/tiles", "../core/assets/tiles", "tiles"]
 
 }
 

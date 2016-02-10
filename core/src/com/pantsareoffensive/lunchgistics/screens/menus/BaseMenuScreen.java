@@ -1,7 +1,6 @@
 package com.pantsareoffensive.lunchgistics.screens.menus;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -9,17 +8,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.pantsareoffensive.lunchgistics.Main;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
-import com.pantsareoffensive.lunchgistics.managers.PreferencesManager;
+import com.pantsareoffensive.lunchgistics.screens.AbstractScreen;
 
 
-public class BaseMenuScreen implements Screen {
+public class BaseMenuScreen extends AbstractScreen {
 
     public Table table;
     public Stage stage;
     public Skin skin;
 
-    public BaseMenuScreen() {
+    public BaseMenuScreen(Main game) {
+        super(game);
         stage = new Stage(new ScreenViewport());
 
         skin = new Skin(Gdx.files.internal("gui/gui.json"));
@@ -35,19 +36,17 @@ public class BaseMenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         Drawable splashDrawable =  new Image(new Texture(Gdx.files.internal("logo.png"))).getDrawable();
         table.setBackground(splashDrawable);
-        if (PreferencesManager.getInstance().isMusicEnabled()) {
-            MusicManager.getInstance().play(MusicManager.GameMusic.MENU);
+        if (game.preferencesManager.isMusicEnabled()) {
+            game.musicManager.play(MusicManager.GameMusic.MENU);
         }
 
     }
 
     @Override
-    public void render(float _delta) {
-
+    public void render(float delta) {
+        super.render(delta);
         stage.act();
         stage.draw();
-
-
     }
 
     @Override

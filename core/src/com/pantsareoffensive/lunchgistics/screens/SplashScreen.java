@@ -12,14 +12,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.pantsareoffensive.lunchgistics.managers.ScreenManager;
+import com.pantsareoffensive.lunchgistics.Main;
+import com.pantsareoffensive.lunchgistics.managers.ScreenManager.STATE;
 
-public class SplashScreen implements Screen {
+public class SplashScreen extends AbstractScreen {
 
     private Stage stage;
 
-
-    public SplashScreen() {
+    public SplashScreen(Main game) {
+        super(game);
         stage = new Stage();
     }
 
@@ -34,7 +35,7 @@ public class SplashScreen implements Screen {
         splashImage.addAction(sequence(fadeIn(0.75f), delay(1.75f), fadeOut(0.75f), new Action() {
             @Override
             public boolean act(float delta) {
-                ScreenManager.getInstance().show(ScreenManager.GameScreens.MAIN_MENU);
+                game.screenManager.setScreen(STATE.MAINMENU);
                 return true;
             }
         }));
