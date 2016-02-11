@@ -29,4 +29,5 @@ public abstract class Box extends GameObject implements IInventoryObject{
         return 0;
     }
 
+
 }

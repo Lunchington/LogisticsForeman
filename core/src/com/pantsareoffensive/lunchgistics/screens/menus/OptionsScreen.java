@@ -122,7 +122,7 @@ public class OptionsScreen extends BaseMenuScreen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
                 game.soundManager.play(SoundManager.GameSound.CLICK);
-                game.screenManager.setScreen(STATE.MAINMENU);
+                game.screenManager.setScreen(STATE.MAIN_MENU);
 
             }
         });

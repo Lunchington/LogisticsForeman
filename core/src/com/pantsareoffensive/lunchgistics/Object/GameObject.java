@@ -4,9 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Disposable;
 
-public abstract class GameObject implements Disposable{
+public abstract class GameObject {
     protected int ID;
     protected String name;
     protected Vector2 position;
@@ -92,8 +91,4 @@ public abstract class GameObject implements Disposable{
             return getBounds().overlaps(g.getBounds());
     }
 
-    @Override
-    public void dispose() {
-
-    }
 }

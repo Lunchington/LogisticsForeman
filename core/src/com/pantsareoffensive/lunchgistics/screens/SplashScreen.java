@@ -30,7 +30,7 @@ public class SplashScreen extends AbstractScreen {
         splashImage.addAction(sequence(fadeIn(0.75f), delay(1.75f), fadeOut(0.75f), new Action() {
             @Override
             public boolean act(float delta) {
-                game.screenManager.setScreen(STATE.MAINMENU);
+                game.screenManager.setScreen(STATE.MAIN_MENU);
                 return true;
             }
         }));

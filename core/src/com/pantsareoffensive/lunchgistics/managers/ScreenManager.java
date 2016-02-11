@@ -19,8 +19,8 @@ public class ScreenManager {
     public enum STATE {
         SPLASH,
         LOADING,
-        MAINMENU,
-        NEWGAME,
+        MAIN_MENU,
+        NEW_GAME,
         OPTIONS,
         GAME
     }
@@ -28,12 +28,14 @@ public class ScreenManager {
     public ScreenManager(Main game) {
         this.game = game;
         this.screens = new HashMap<STATE, AbstractScreen>();
+        for(STATE s: STATE.values()) {
+            init(s);
+        }
 
-        setScreen(STATE.SPLASH);
+        setScreen(STATE.GAME);
+
     }
-
-
-
+    
     public void init(STATE newScreen) {
         switch (newScreen){
             case SPLASH:
@@ -44,11 +46,11 @@ public class ScreenManager {
                 this.screens.put(STATE.LOADING, new LoadingScreen(game));
                 return;
 
-            case MAINMENU:
-                this.screens.put(STATE.MAINMENU, new MenuScreen(game));
+            case MAIN_MENU:
+                this.screens.put(STATE.MAIN_MENU, new MenuScreen(game));
                 return;
-            case NEWGAME:
-                this.screens.put(STATE.NEWGAME, new NewGameScreen(game));
+            case NEW_GAME:
+                this.screens.put(STATE.NEW_GAME, new NewGameScreen(game));
                 return;
 
             case OPTIONS:

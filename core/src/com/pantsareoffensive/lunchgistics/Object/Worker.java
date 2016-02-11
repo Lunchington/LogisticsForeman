@@ -18,6 +18,8 @@ public class Worker extends Entity {
     @Override
     public void update(float delta) {
         super.update(delta);
+        position.x -= 50*delta;
+
         if (position.y > prevPosition.y)
             region = "b";
         else {

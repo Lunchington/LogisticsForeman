@@ -20,8 +20,4 @@ public class BoxLarge extends Box {
         return 6;
     }
 
-    @Override
-    public void dispose() {
-
-    }
 }

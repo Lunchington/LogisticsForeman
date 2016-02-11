@@ -34,7 +34,7 @@ public class GameInput extends InputAdapter {
         Vector2 pos = map.getView().unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
         switch (key) {
             case Input.Keys.ESCAPE:
-                game.screenManager.setScreen(STATE.MAINMENU);
+                game.screenManager.setScreen(STATE.MAIN_MENU);
                 return true;
             case Input.Keys.NUM_1:
                 map.add(new Worker(pos));

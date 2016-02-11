@@ -68,12 +68,11 @@ public class GameMap {
 
     public void add(GameObject e) {
 
-        if (isOverlapping(e)) {
-            e.dispose();
+        if (isOverlapping(e))
             return;
-        }
 
         gameObjects.add(e);
+
         if (e instanceof Entity) {
             entities.add((Entity) e);
         }
@@ -97,15 +96,16 @@ public class GameMap {
 
     }
 
-    private boolean isOverlapping(GameObject e) {
-        if (isCollideWithTile(e.getBounds()))
-            return true;
-
+    private boolean isCollideWithObject(Rectangle r) {
         for (GameObject g: gameObjects) {
-            if (g.isInBounds(e))
-                    return true;
+            if (g.getBounds().overlaps(r))
+                return true;
         }
         return false;
+    }
+
+    private boolean isOverlapping(GameObject e) {
+        return isCollideWithTile(e.getBounds()) || isCollideWithObject(e.getBounds());
     }
 
     public ArrayList<GameObject> getObjects() {
@@ -142,7 +142,13 @@ public class GameMap {
     public void setTile(Vector2 pos, Tile tile) {
         int x = (int) (pos.x / 32);
         int y = (int) (pos.y / 32);
-        mapData.setTile(x,y,tile);
+
+        int tileX = x*32;
+        int tileY = y *32;
+        Rectangle tBounds = new Rectangle(tileX,tileY,32,32);
+
+        if(!isCollideWithObject(tBounds))
+            mapData.setTile(x,y,tile);
     }
 
 }

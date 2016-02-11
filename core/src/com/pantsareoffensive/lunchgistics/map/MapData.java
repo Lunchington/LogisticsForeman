@@ -1,7 +1,6 @@
 package com.pantsareoffensive.lunchgistics.map;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.pantsareoffensive.lunchgistics.Global;
 
 import java.util.HashMap;
@@ -55,7 +54,7 @@ public class MapData {
     }
 
     public boolean isTile(int x, int y) {
-        return ( x >= 0 && y >= 0 && x <= tiles.length && y <= tiles[0].length);
+        return ( x >= 0 && y >= 0 && x < tiles.length && y < tiles[0].length);
     }
 
     public Tile getTileAdjacent(int x, int y, int direction) {

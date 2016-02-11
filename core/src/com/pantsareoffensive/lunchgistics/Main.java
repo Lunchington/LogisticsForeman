@@ -30,18 +30,19 @@ public class Main extends Game {
         batch = new SpriteBatch();
         shapeRenderer =  new ShapeRenderer();
 
-        assetManager = new AssetManager();
-        screenManager = new ScreenManager(this);
-
         musicManager = new MusicManager();
         soundManager = new SoundManager();
         preferencesManager = new PreferencesManager();
+
+        assetManager = new AssetManager();
 
         musicManager.setVolume(preferencesManager.getMusicVolume());
         musicManager.setEnabled(preferencesManager.isMusicEnabled());
 
         soundManager.setVolume(preferencesManager.getSoundVolume());
         soundManager.setEnabled(preferencesManager.isSoundEnabled());
+
+        screenManager = new ScreenManager(this);
 
         RandomNames.init();
 
