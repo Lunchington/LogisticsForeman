@@ -11,8 +11,10 @@ import com.pantsareoffensive.lunchgistics.object.Worker;
 
 import java.util.ArrayList;
 
-public class GameMap {
+public class World {
     protected MapData mapData;
+    protected WorldData worldData;
+
     protected ArrayList<GameObject> gameObjects =new ArrayList<GameObject>();
     protected ArrayList<Entity> entities =new ArrayList<Entity>();
 
@@ -24,12 +26,14 @@ public class GameMap {
     public int getMapPixelWidth() {return getMapWidth()* 32; }
     public int getMapPixelHeight() {return getMapHeight() * 32; }
 
-    public GameMap(Viewport view) {
+    public World(Viewport view) {
         this.view = view;
         this.mapData = new MapData().getBlank(100,80);
+        this.worldData = new WorldData();
     }
 
     public void update(float delta ) {
+        worldData.setTime(delta);
         for (GameObject e : entities) {
             e.update(delta);
         }
@@ -159,4 +163,27 @@ public class GameMap {
             mapData.setTile(x,y,tile);
     }
 
+
+    public int getDay() {
+        return worldData.getDay();
+    }
+    public int getHour() {
+        return worldData.getHour();
+    }
+
+    public int getMinute() {
+        return worldData.getMinute();
+    }
+
+    public int getMoney() {
+        return worldData.getMoney();
+    }
+
+    public void increaseSpeed(int i) {
+        worldData.increaseSpeed(i);
+    }
+
+    public int getTimeMultiplier() {
+        return worldData.getTimeMultiplier();
+    }
 }

@@ -9,7 +9,7 @@ import com.pantsareoffensive.lunchgistics.Main;
 import com.pantsareoffensive.lunchgistics.managers.ScreenManager.STATE;
 import com.pantsareoffensive.lunchgistics.map.Tile;
 import com.pantsareoffensive.lunchgistics.object.*;
-import com.pantsareoffensive.lunchgistics.map.GameMap;
+import com.pantsareoffensive.lunchgistics.map.World;
 import com.pantsareoffensive.lunchgistics.screens.GamePlayScreen;
 
 public class GameInput extends InputAdapter {
@@ -21,40 +21,49 @@ public class GameInput extends InputAdapter {
     private Rectangle clickRect;
 
     private Main game;
-    private GameMap map;
+    private World world;
 
-    public GameInput(Main game, GamePlayScreen screen) {
+    public GameInput(Main game,World world, GamePlayScreen screen) {
         this.game = game;
         this.screen = screen;
-        this.map = screen.getWorld();
+        this.world = world;
+        this.world = screen.getWorld();
     }
 
     @Override
     public boolean keyUp(int key) {
-        Vector2 pos = map.getView().unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+        Vector2 pos = world.getView().unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
         switch (key) {
             case Input.Keys.ESCAPE:
                 game.screenManager.setScreen(STATE.MAIN_MENU);
                 return true;
             case Input.Keys.NUM_1:
-                map.add(new Worker(pos));
+                world.add(new Worker(pos));
                 return true;
             case Input.Keys.NUM_2:
-                map.add(new Skid(pos));
+                world.add(new Skid(pos));
                 return true;
             case Input.Keys.NUM_3:
-                map.add(new BoxSmall(pos));
+                world.add(new BoxSmall(pos));
             case Input.Keys.NUM_4:
-                map.add(new BoxMedium(pos));
+                world.add(new BoxMedium(pos));
                 return true;
             case Input.Keys.NUM_5:
-                map.add(new BoxLarge(pos));
+                world.add(new BoxLarge(pos));
                 return true;
             case Input.Keys.NUM_6:
-                map.setTile(pos,Tile.WALL);
+                world.setTile(pos,Tile.WALL);
                 return true;
             case Input.Keys.F5:
                 game.toggleDevMode();
+                return true;
+            case Input.Keys.PLUS:
+                world.increaseSpeed(1);
+                return true;
+            case Input.Keys.MINUS:
+                world.increaseSpeed(-1);
+                return true;
+
             default:
                 return false;
         }
@@ -71,10 +80,10 @@ public class GameInput extends InputAdapter {
     @Override
     public boolean touchDown (int x, int y, int pointer, int button) {
         if (button == Input.Buttons.LEFT) {
-            clicked = map.getView().unproject(new Vector2(x,y));
+            clicked = world.getView().unproject(new Vector2(x,y));
 
             GameObject oldSelected = selected;
-            selected = map.getObjectAtMouse(clicked);
+            selected = world.getObjectAtMouse(clicked);
 
             clickRect = calcClickRect(x,y);
 
@@ -122,7 +131,7 @@ public class GameInput extends InputAdapter {
 
     public Rectangle calcClickRect(int screenX, int screenY) {
         Vector2 newVec = getClicked().cpy();
-        Vector2 mPos = map.getView().unproject(new Vector2(screenX, screenY));
+        Vector2 mPos = world.getView().unproject(new Vector2(screenX, screenY));
         Vector2 drawVec = newVec.cpy();
 
         float w;

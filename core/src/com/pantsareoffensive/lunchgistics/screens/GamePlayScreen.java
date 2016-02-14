@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.*;
 import com.pantsareoffensive.lunchgistics.Global;
 import com.pantsareoffensive.lunchgistics.Main;
@@ -16,14 +15,12 @@ import com.pantsareoffensive.lunchgistics.controllers.HudController;
 import com.pantsareoffensive.lunchgistics.input.CameraScroll;
 import com.pantsareoffensive.lunchgistics.input.GameInput;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
-import com.pantsareoffensive.lunchgistics.map.GameMap;
-import com.pantsareoffensive.lunchgistics.object.Entity;
-import com.pantsareoffensive.lunchgistics.object.Worker;
+import com.pantsareoffensive.lunchgistics.map.World;
 
 public class GamePlayScreen extends AbstractScreen {
 
 
-    private GameMap world;
+    private World world;
 
     private HudController hudController;
 
@@ -39,17 +36,16 @@ public class GamePlayScreen extends AbstractScreen {
         gameCamera = new OrthographicCamera();
         viewport = new ScreenViewport(gameCamera);
 
-        hudController = new HudController(game,stage);
+        world = new World(viewport);
 
-        world = new GameMap(viewport);
-        gameInput = new GameInput(game,this);
+        gameInput = new GameInput(game,world,this);
         cameraScroll = new CameraScroll(world,gameInput);
-
+        hudController = new HudController(game,world,stage);
 
         gameCamera.setToOrtho(false, Global.WIDTH, Global.HEIGHT);
     }
 
-    public GameMap getWorld() { return world; }
+    public World getWorld() { return world; }
     public HudController getHud(){ return hudController; }
 
     @Override
@@ -90,7 +86,7 @@ public class GamePlayScreen extends AbstractScreen {
         cameraScroll.update(delta);
         world.update(delta);
 
-        hudController.update(delta,world.getWorkers().size(),0);
+        hudController.update(delta);
 
     }
 

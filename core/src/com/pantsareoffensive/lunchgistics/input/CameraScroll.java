@@ -5,10 +5,10 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.pantsareoffensive.lunchgistics.map.GameMap;
+import com.pantsareoffensive.lunchgistics.map.World;
 
 public class CameraScroll extends InputAdapter{
-    private GameMap map;
+    private World map;
     private OrthographicCamera camera;
     private GameInput input;
     private Vector2 move = new Vector2(0,0);
@@ -21,7 +21,7 @@ public class CameraScroll extends InputAdapter{
     float scrollSpeed = 500f;
 
 
-    public CameraScroll(GameMap map, GameInput input) {
+    public CameraScroll(World map, GameInput input) {
         this.map = map;
         this.input = input;
         this.camera = (OrthographicCamera) map.getView().getCamera();

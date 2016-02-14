@@ -15,10 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.pantsareoffensive.lunchgistics.Main;
 import com.pantsareoffensive.lunchgistics.managers.SoundManager;
+import com.pantsareoffensive.lunchgistics.map.World;
+import com.sun.javafx.binding.StringFormatter;
 
 
 public class HudController {
     private Stage stage;
+    private World world;
     private Main game;
     public Table topTable,bottomTable,iconsTable;
     public Skin skin;
@@ -27,13 +30,10 @@ public class HudController {
 
     public Label money, workers, day, toolTip;
 
-    public float time  = 0;
-
-
-
-    public HudController(Main game, Stage stage) {
+    public HudController(Main game, World world, Stage stage) {
         this.stage = stage;
         this.game = game;
+        this.world = world;
         this.skin = new Skin(Gdx.files.internal("gui/gui.json"));
         this.topTable = new Table(skin);
         this.bottomTable = new Table(skin);
@@ -104,30 +104,14 @@ public class HudController {
         toolTip.setText(text);
     }
 
-    public void update(float delta, int workersCount, int money) {
-        time += delta;
-        day.setText("Day " + getDay());
-        workers.setText("Workers: " +workersCount);
-
+    public void update(float delta) {
+        day.setText(String.format("Day %s %s:%s (%sx)",world.getDay(),world.getHour(),world.getMinute(),world.getTimeMultiplier()));
+        workers.setText("Workers: " +world.getWorkers().size());
+        money.setText(String.format("$%s", world.getMoney()));
         stage.act(delta);
 
 
     }
 
-    private int getTimeElapsed() {
-        return (int) Math.floor(time) +1;
-    }
-    private int getDay() {
-        int t = getHour() ;
-        return t/24;
-    }
-    private int getHour() {
-        int t = getMinute() ;
-        return t/60;
-    }
 
-    private int getMinute() {
-        int t = getTimeElapsed() ;
-        return t;
-    }
 }
