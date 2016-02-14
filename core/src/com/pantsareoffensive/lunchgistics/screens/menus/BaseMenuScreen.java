@@ -27,8 +27,8 @@ public class BaseMenuScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        super.show();
         table.clear();
-        Gdx.input.setInputProcessor(stage);
         Drawable splashDrawable =  new Image(new Texture(Gdx.files.internal("logo.png"))).getDrawable();
         table.setBackground(splashDrawable);
         if (game.preferencesManager.isMusicEnabled()) {

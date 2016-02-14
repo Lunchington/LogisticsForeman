@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.*;
 import com.pantsareoffensive.lunchgistics.Global;
 import com.pantsareoffensive.lunchgistics.Main;
@@ -16,8 +17,11 @@ import com.pantsareoffensive.lunchgistics.input.CameraScroll;
 import com.pantsareoffensive.lunchgistics.input.GameInput;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
 import com.pantsareoffensive.lunchgistics.map.GameMap;
+import com.pantsareoffensive.lunchgistics.object.Entity;
+import com.pantsareoffensive.lunchgistics.object.Worker;
 
 public class GamePlayScreen extends AbstractScreen {
+
 
     private GameMap world;
 
@@ -35,7 +39,7 @@ public class GamePlayScreen extends AbstractScreen {
         gameCamera = new OrthographicCamera();
         viewport = new ScreenViewport(gameCamera);
 
-        hudController = new HudController(stage);
+        hudController = new HudController(game,stage);
 
         world = new GameMap(viewport);
         gameInput = new GameInput(game,this);
@@ -50,7 +54,12 @@ public class GamePlayScreen extends AbstractScreen {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(new InputMultiplexer(cameraScroll, gameInput, stage));
+        InputMultiplexer multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(stage);
+        multiplexer.addProcessor(cameraScroll);
+        multiplexer.addProcessor(gameInput);
+
+        Gdx.input.setInputProcessor(multiplexer);
 
         if(game.preferencesManager.isMusicEnabled())
             game.musicManager.play(MusicManager.GameMusic.GAME);
@@ -62,10 +71,7 @@ public class GamePlayScreen extends AbstractScreen {
 
         stage.setDebugAll(Main.DEV_MODE);
 
-        cameraScroll.update(delta);
-        world.update(delta);
-        stage.act(delta);
-
+      update(delta);
         game.batch.begin();
             game.batch.setProjectionMatrix(gameCamera.combined);
             world.render(game.batch);
@@ -76,6 +82,15 @@ public class GamePlayScreen extends AbstractScreen {
 
         stage.draw();
 
+
+    }
+
+    private void update(float delta) {
+
+        cameraScroll.update(delta);
+        world.update(delta);
+
+        hudController.update(delta,world.getWorkers().size(),0);
 
     }
 

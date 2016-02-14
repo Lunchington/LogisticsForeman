@@ -1,11 +1,16 @@
 package com.pantsareoffensive.lunchgistics.object;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.pantsareoffensive.lunchgistics.Main;
+import com.pantsareoffensive.lunchgistics.managers.ArtManager;
 
 public abstract class GameObject {
+    protected static ArtManager assetManager;
+
     protected int ID;
     protected String name;
     protected Vector2 position;
@@ -21,7 +26,9 @@ public abstract class GameObject {
 
     protected boolean selected = false;
 
+
     public GameObject(TextureRegion texture, Vector2 pos) {
+        assetManager = Main.getAssetManager();
         this.texture = texture;
         this.width = texture.getRegionWidth();
         this.height = texture.getRegionHeight();

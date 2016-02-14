@@ -2,14 +2,15 @@ package com.pantsareoffensive.lunchgistics.object;
 
 import com.badlogic.gdx.math.Vector2;
 import com.pantsareoffensive.lunchgistics.Global;
+import com.pantsareoffensive.lunchgistics.managers.ArtManager;
 import com.pantsareoffensive.lunchgistics.utils.RandomNames;
 
 
 public class Worker extends Entity {
 
     public Worker(Vector2 pos) {
-        super(Global.Art.WORKER_ATLAS.findRegion("worker_f"),pos);
-        this.atlas = (Global.Art.WORKER_ATLAS);
+        super(ArtManager.WORKER_ATLAS.findRegion("worker_f"),pos);
+        this.atlas = (ArtManager.WORKER_ATLAS);
         this.region ="f";
         this.name = RandomNames.getInstance().getName();
         this.objWidth = 20;
@@ -18,7 +19,6 @@ public class Worker extends Entity {
     @Override
     public void update(float delta) {
         super.update(delta);
-        position.x -= 50*delta;
 
         if (position.y > prevPosition.y)
             region = "b";
@@ -38,7 +38,7 @@ public class Worker extends Entity {
                 flip = true;
             }
         }
-        texture = Global.Art.WORKER_ATLAS.findRegion("worker_" + this.region);
+        texture = ArtManager.WORKER_ATLAS.findRegion("worker_" + this.region);
 
         if(flip && !texture.isFlipX())
             texture.flip(true,false);

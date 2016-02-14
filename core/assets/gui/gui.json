@@ -16,7 +16,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	default: { down: icon_button_down, up: icon_button},
-	toggle: { down: icon_button_down, checked: icon_button_down,up: icon_button}
+	units: { down: icon_button_units_down,up: icon_button_units}
 },
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: { titleFont: default-font, background: menu_bg, titleFontColor: white }
@@ -25,7 +25,9 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {label: { font: default-font, fontColor: white, background: menu_bg}, background: menu_bg}
 },
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-	default: { font: default-font, fontColor: white }
+	default: { font: default-font, fontColor: white },
+	bg: { font: default-font, fontColor: white, background: label_bg }
+
 },
 com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
         default-horizontal: { background: slider_bg, knob: slider_knob },

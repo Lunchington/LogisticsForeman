@@ -31,7 +31,7 @@ button_up
   index: -1
 check_clear
   rotate: false
-  xy: 210, 14
+  xy: 262, 14
   size: 16, 16
   split: 4, 4, 4, 4
   orig: 16, 16
@@ -39,7 +39,7 @@ check_clear
   index: -1
 check_selected
   rotate: false
-  xy: 338, 46
+  xy: 390, 46
   size: 16, 16
   split: 4, 4, 4, 4
   orig: 16, 16
@@ -47,7 +47,7 @@ check_selected
   index: -1
 icon_button
   rotate: false
-  xy: 210, 32
+  xy: 262, 32
   size: 30, 30
   split: 5, 4, 5, 5
   pad: 5, 5, 5, 5
@@ -56,7 +56,7 @@ icon_button
   index: -1
 icon_button_down
   rotate: false
-  xy: 242, 32
+  xy: 294, 32
   size: 30, 30
   split: 5, 5, 5, 5
   orig: 30, 30
@@ -64,7 +64,7 @@ icon_button_down
   index: -1
 icon_button_units
   rotate: false
-  xy: 274, 32
+  xy: 326, 32
   size: 30, 30
   split: 5, 5, 4, 4
   orig: 30, 30
@@ -72,15 +72,24 @@ icon_button_units
   index: -1
 icon_button_units_down
   rotate: false
-  xy: 306, 32
+  xy: 358, 32
   size: 30, 30
   split: 5, 4, 4, 4
   orig: 30, 30
   offset: 0, 0
   index: -1
-menu_bg
+label_bg
   rotate: false
   xy: 158, 12
+  size: 50, 50
+  split: 3, 4, 3, 3
+  pad: 3, 3, 3, 3
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+menu_bg
+  rotate: false
+  xy: 210, 12
   size: 50, 50
   split: 3, 4, 3, 3
   pad: 3, 3, 3, 3
@@ -97,7 +106,7 @@ slider_bg
   index: -1
 slider_knob
   rotate: false
-  xy: 228, 14
+  xy: 280, 14
   size: 8, 16
   split: 3, 3, 3, 3
   orig: 8, 16

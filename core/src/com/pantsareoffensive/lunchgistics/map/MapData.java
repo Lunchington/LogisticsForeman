@@ -2,6 +2,7 @@ package com.pantsareoffensive.lunchgistics.map;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.pantsareoffensive.lunchgistics.Global;
+import com.pantsareoffensive.lunchgistics.managers.ArtManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -99,7 +100,7 @@ public class MapData {
             int tileValue = getTileValue(x,y);
             if(tileKey.containsKey(tileValue))
                 tileValue = tileKey.get(tileValue);
-            return Global.Art.TILES_ATLAS.findRegion("walls"+tileValue) ;
+            return ArtManager.TILES_ATLAS.findRegion("walls"+tileValue) ;
         }
 
         return t.getTexture();
@@ -146,7 +147,11 @@ public class MapData {
         return value;
     }
 
-    public void setTile(int x, int y, Tile t) {
-        tiles[x][y] = t;
+    public void setTile(int x, int y, Tile tile) {
+        Tile t = tiles[x][y];
+        if (t == Tile.WALL)
+            tile = Tile.DIRT;
+
+        tiles[x][y] = tile;
     }
 }

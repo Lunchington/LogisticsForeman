@@ -1,7 +1,10 @@
 package com.pantsareoffensive.lunchgistics.map;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.pantsareoffensive.lunchgistics.Global;
+import com.pantsareoffensive.lunchgistics.Main;
+import com.pantsareoffensive.lunchgistics.managers.ArtManager;
 
 public enum Tile {
     DIRT,
@@ -15,13 +18,13 @@ public enum Tile {
 
         switch (this) {
             case DIRT:
-                return Global.Art.TILES_ATLAS.findRegion("dirt");
+                return ArtManager.TILES_ATLAS.findRegion("dirt");
             case EDGE:
-                return Global.Art.TILES_ATLAS.findRegion("edge");
+                return ArtManager.TILES_ATLAS.findRegion("edge");
             case GRASS:
-                return Global.Art.TILES_ATLAS.findRegion("grass");
+                return ArtManager.TILES_ATLAS.findRegion("grass");
             case ROAD:
-                return Global.Art.TILES_ATLAS.findRegion("road");
+                return ArtManager.TILES_ATLAS.findRegion("road");
             default:
                 return null;
         }

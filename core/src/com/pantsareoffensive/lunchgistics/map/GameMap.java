@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pantsareoffensive.lunchgistics.object.Entity;
 import com.pantsareoffensive.lunchgistics.object.GameObject;
+import com.pantsareoffensive.lunchgistics.object.Worker;
 
 import java.util.ArrayList;
 
@@ -15,10 +16,7 @@ public class GameMap {
     protected ArrayList<GameObject> gameObjects =new ArrayList<GameObject>();
     protected ArrayList<Entity> entities =new ArrayList<Entity>();
 
-
-
     private  Viewport view;
-
 
     public int getMapWidth() {return mapData.width; }
     public int getMapHeight() {return mapData.height; }
@@ -118,6 +116,16 @@ public class GameMap {
 
     public ArrayList<Entity> getEntities() {
         return this.entities;
+    }
+
+    public ArrayList<Worker> getWorkers() {
+        ArrayList<Worker> workers = new ArrayList<Worker>();
+
+        for (Entity e: entities) {
+            if (e instanceof Worker)
+                workers.add((Worker) e);
+        }
+        return workers;
     }
 
 
