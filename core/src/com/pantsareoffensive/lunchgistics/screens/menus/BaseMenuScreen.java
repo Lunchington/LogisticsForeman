@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.pantsareoffensive.lunchgistics.Main;
+import com.pantsareoffensive.lunchgistics.managers.ArtManager;
 import com.pantsareoffensive.lunchgistics.managers.MusicManager;
 import com.pantsareoffensive.lunchgistics.screens.AbstractScreen;
 
@@ -18,7 +19,7 @@ public class BaseMenuScreen extends AbstractScreen {
 
     public BaseMenuScreen(Main game) {
         super(game);
-        skin = new Skin(Gdx.files.internal("gui/gui.json"));
+        skin = ArtManager.GUI_SKIN;
         table = new Table(skin);
         table.setFillParent(true);
         stage.addActor(table);

@@ -1,5 +1,4 @@
 {
-com.badlogic.gdx.graphics.g2d.BitmapFont: { default-font: { file: default.fnt } },
 com.badlogic.gdx.graphics.Color: {
 	green: { a: 1, b: 0, g: 1, r: 0 },
 	white: { a: 1, b: 1, g: 1, r: 1 },
@@ -25,9 +24,9 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {label: { font: default-font, fontColor: white, background: menu_bg}, background: menu_bg}
 },
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-	default: { font: default-font, fontColor: white },
-	bg: { font: default-font, fontColor: white, background: label_bg }
-
+	default: { font: default-font },
+    bg: { font: default-font, background: label_bg },
+    small: { font: small-font }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
         default-horizontal: { background: slider_bg, knob: slider_knob },

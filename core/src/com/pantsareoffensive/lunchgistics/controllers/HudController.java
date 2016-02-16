@@ -1,87 +1,80 @@
 package com.pantsareoffensive.lunchgistics.controllers;
 
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.FloatAction;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.pantsareoffensive.lunchgistics.Main;
-import com.pantsareoffensive.lunchgistics.managers.SoundManager;
+import com.pantsareoffensive.lunchgistics.gui.UIButton;
+import com.pantsareoffensive.lunchgistics.managers.ArtManager;
 import com.pantsareoffensive.lunchgistics.map.World;
-import com.sun.javafx.binding.StringFormatter;
 
 
 public class HudController {
     private Stage stage;
     private World world;
     private Main game;
-    public Table topTable,bottomTable,iconsTable;
+    public Table timeTable,moneyTable,infoTable,iconsTable;
     public Skin skin;
 
-    public ImageButton units,test1,test2,test3;
+    public UIButton units;
 
     public Label money, workers, day, toolTip;
+
 
     public HudController(Main game, World world, Stage stage) {
         this.stage = stage;
         this.game = game;
         this.world = world;
-        this.skin = new Skin(Gdx.files.internal("gui/gui.json"));
-        this.topTable = new Table(skin);
-        this.bottomTable = new Table(skin);
+        this.skin = ArtManager.GUI_SKIN;
+
+        this.timeTable = new Table(skin);
+        this.moneyTable = new Table(skin);
+
+        this.infoTable = new Table(skin);
         this.iconsTable = new Table(skin);
+
 
         init();
 
     }
 
     public void init() {
+        skin.getFont("default-font").getData().markupEnabled = true;
+        skin.getFont("small-font").getData().markupEnabled = true;
+
         //DEFAULTS--------------
-        topTable.setFillParent(true);
-        topTable.center().top();
-        topTable.defaults().pad(5f);
+        timeTable.setFillParent(true);
+        timeTable.top().left();
+        timeTable.defaults().pad(5f);
 
-        topTable.columnDefaults(0).left().minWidth(100f);
-        topTable.columnDefaults(1).center().minWidth(100f);
-        topTable.columnDefaults(2).right().minWidth(100f);
+        moneyTable.setFillParent(true);
+        moneyTable.top().right();
+        moneyTable.defaults().pad(5f);
 
-        bottomTable.setFillParent(true);
-        bottomTable.right().bottom();
-        bottomTable.defaults().pad(5f);
+        infoTable.setFillParent(true);
+        infoTable.bottom().right();
+        infoTable.defaults().pad(5f);
 
         iconsTable.setFillParent(true);
-        iconsTable.left().bottom();
+        iconsTable.bottom().left();
         iconsTable.defaults().pad(5f);
+
+
         //-------------------
+
 
         toolTip = new Label("",skin);
 
-        workers = new Label("",skin.get("bg",LabelStyle.class));
-        day = new Label("",skin.get("bg",LabelStyle.class));
-        money = new Label("",skin.get("bg",LabelStyle.class));
+        workers = new Label("",skin);
+        day = new Label("",skin);
+        money = new Label("",skin);
 
-        units = new ImageButton(skin.get("units",ImageButtonStyle.class));
-        units.addListener(new ClickListener() {
+        units = new UIButton(game, skin,"units","Units");
 
-            @Override
-            public void clicked(InputEvent event, float x, float y )
-            {
-                super.clicked(event,x,y);
-                game.soundManager.play(SoundManager.GameSound.CLICK);
-            }
-        });
+        timeTable.add(day);
+        timeTable.add(workers);
 
-        topTable.add(day);
-        topTable.add(money);
-        topTable.add(workers);
+        moneyTable.add(money);
 
         toolTip.setAlignment(Align.center);
 
@@ -89,13 +82,16 @@ public class HudController {
         money.setAlignment(Align.center);
         workers.setAlignment(Align.center);
 
+
         iconsTable.add(units);
 
-        bottomTable.add(toolTip);
+        infoTable.add(toolTip);
 
-        stage.addActor(topTable);
-        stage.addActor(bottomTable);
+        stage.addActor(timeTable);
+        stage.addActor(moneyTable);
+
         stage.addActor(iconsTable);
+        stage.addActor(infoTable);
 
 
     }
@@ -105,7 +101,7 @@ public class HudController {
     }
 
     public void update(float delta) {
-        day.setText(String.format("Day %s %s:%s (%sx)",world.getDay(),world.getHour(),world.getMinute(),world.getTimeMultiplier()));
+        day.setText(String.format("Day %s %s:%s [GREEN](%sx)",world.getDay(),world.getHour(),world.getMinute(),world.getTimeMultiplier()));
         workers.setText("Workers: " +world.getWorkers().size());
         money.setText(String.format("$%s", world.getMoney()));
         stage.act(delta);

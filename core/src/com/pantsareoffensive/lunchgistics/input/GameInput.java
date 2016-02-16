@@ -34,7 +34,7 @@ public class GameInput extends InputAdapter {
     public boolean keyUp(int key) {
         Vector2 pos = world.getView().unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
         switch (key) {
-            case Input.Keys.ESCAPE:
+            case Input.Keys.F1:
                 game.screenManager.setScreen(STATE.MAIN_MENU);
                 return true;
             case Input.Keys.NUM_1:

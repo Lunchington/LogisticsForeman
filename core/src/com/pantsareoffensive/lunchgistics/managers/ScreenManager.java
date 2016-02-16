@@ -28,9 +28,6 @@ public class ScreenManager {
     public ScreenManager(Main game) {
         this.game = game;
         this.screens = new HashMap<STATE, AbstractScreen>();
-        for(STATE s: STATE.values()) {
-            init(s);
-        }
 
         setScreen(STATE.GAME);
 
@@ -59,10 +56,6 @@ public class ScreenManager {
 
             case GAME:
                 this.screens.put(STATE.GAME, new GamePlayScreen(game));
-                return;
-
-            default:
-                return;
         }
 
     }
