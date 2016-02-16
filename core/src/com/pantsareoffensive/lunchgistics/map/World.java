@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.pantsareoffensive.lunchgistics.object.Entity;
-import com.pantsareoffensive.lunchgistics.object.GameObject;
-import com.pantsareoffensive.lunchgistics.object.Worker;
+import com.pantsareoffensive.lunchgistics.GameObjects.Entity;
+import com.pantsareoffensive.lunchgistics.GameObjects.GameObject;
+import com.pantsareoffensive.lunchgistics.GameObjects.Worker;
 
 import java.util.ArrayList;
 

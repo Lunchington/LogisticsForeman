@@ -1,6 +1,6 @@
-package com.pantsareoffensive.lunchgistics.object;
+package com.pantsareoffensive.lunchgistics.GameObjects;
 
-import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -10,6 +10,7 @@ import com.pantsareoffensive.lunchgistics.managers.ArtManager;
 
 public abstract class GameObject {
     protected static ArtManager assetManager;
+    protected BitmapFont font;
 
     protected int ID;
     protected String name;
@@ -35,6 +36,7 @@ public abstract class GameObject {
 
         this.position = new Vector2(pos.x - width/2, pos.y - height/2);
         this.bounds = new Rectangle(position.x,position.y,width,height);
+        font = ArtManager.GUI_SKIN.getFont("small-font");
     }
 
 

@@ -1,4 +1,4 @@
-package com.pantsareoffensive.lunchgistics.object;
+package com.pantsareoffensive.lunchgistics.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;

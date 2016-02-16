@@ -1,4 +1,4 @@
-package com.pantsareoffensive.lunchgistics.object;
+package com.pantsareoffensive.lunchgistics.GameObjects;
 
 public interface IStorage extends IInventoryObject{
     int getInventorySpace();

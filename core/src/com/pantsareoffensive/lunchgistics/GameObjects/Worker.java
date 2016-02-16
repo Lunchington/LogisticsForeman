@@ -1,7 +1,7 @@
-package com.pantsareoffensive.lunchgistics.object;
+package com.pantsareoffensive.lunchgistics.GameObjects;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.pantsareoffensive.lunchgistics.Global;
 import com.pantsareoffensive.lunchgistics.managers.ArtManager;
 import com.pantsareoffensive.lunchgistics.utils.RandomNames;
 
@@ -42,6 +42,13 @@ public class Worker extends Entity {
 
         if(flip && !texture.isFlipX())
             texture.flip(true,false);
+
+    }
+
+    @Override
+    public void render(SpriteBatch batch) {
+        super.render(batch);
+        font.draw(batch,name, getX() - name.length(),getTop() + 16);
 
     }
 

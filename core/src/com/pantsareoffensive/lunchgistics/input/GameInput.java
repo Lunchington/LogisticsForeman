@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.pantsareoffensive.lunchgistics.Main;
 import com.pantsareoffensive.lunchgistics.managers.ScreenManager.STATE;
 import com.pantsareoffensive.lunchgistics.map.Tile;
-import com.pantsareoffensive.lunchgistics.object.*;
+import com.pantsareoffensive.lunchgistics.GameObjects.*;
 import com.pantsareoffensive.lunchgistics.map.World;
 import com.pantsareoffensive.lunchgistics.screens.GamePlayScreen;
 
