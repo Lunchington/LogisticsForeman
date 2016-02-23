@@ -7,10 +7,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pantsareoffensive.lunchgistics.Main;
 import com.pantsareoffensive.lunchgistics.managers.ArtManager;
+import com.pantsareoffensive.lunchgistics.map.World;
 
 public abstract class GameObject {
     protected static ArtManager assetManager;
     protected BitmapFont font;
+    protected World world;
 
     protected int ID;
     protected String name;
@@ -28,7 +30,8 @@ public abstract class GameObject {
     protected boolean selected = false;
 
 
-    public GameObject(TextureRegion texture, Vector2 pos) {
+    public GameObject(World world, TextureRegion texture, Vector2 pos) {
+        this.world = world;
         assetManager = Main.getAssetManager();
         this.texture = texture;
         this.width = texture.getRegionWidth();

@@ -1,11 +1,12 @@
 package com.pantsareoffensive.lunchgistics.GameObjects;
 import com.badlogic.gdx.math.Vector2;
 import com.pantsareoffensive.lunchgistics.managers.ArtManager;
+import com.pantsareoffensive.lunchgistics.map.World;
 
 
 public class BoxMedium extends Box {
-    public BoxMedium(Vector2 pos) {
-        super(ArtManager.ITEMS_ATLAS.findRegion("box_m"), pos);
+    public BoxMedium(World world, Vector2 pos) {
+        super(world, ArtManager.ITEMS_ATLAS.findRegion("box_m"), pos);
         setObjSize(10,10);
 
     }

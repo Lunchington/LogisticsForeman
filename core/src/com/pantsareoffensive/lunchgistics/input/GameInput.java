@@ -38,18 +38,18 @@ public class GameInput extends InputAdapter {
                 game.screenManager.setScreen(STATE.MAIN_MENU);
                 return true;
             case Input.Keys.NUM_1:
-                world.add(new Worker(pos));
+                world.add(new Worker(world,pos));
                 return true;
             case Input.Keys.NUM_2:
-                world.add(new Skid(pos));
+                world.add(new Skid(world,pos));
                 return true;
             case Input.Keys.NUM_3:
-                world.add(new BoxSmall(pos));
+                world.add(new BoxSmall(world,pos));
             case Input.Keys.NUM_4:
-                world.add(new BoxMedium(pos));
+                world.add(new BoxMedium(world,pos));
                 return true;
             case Input.Keys.NUM_5:
-                world.add(new BoxLarge(pos));
+                world.add(new BoxLarge(world,pos));
                 return true;
             case Input.Keys.NUM_6:
                 world.setTile(pos,Tile.WALL);

@@ -3,13 +3,14 @@ package com.pantsareoffensive.lunchgistics.GameObjects;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.pantsareoffensive.lunchgistics.managers.ArtManager;
+import com.pantsareoffensive.lunchgistics.map.World;
 import com.pantsareoffensive.lunchgistics.utils.RandomNames;
 
 
 public class Worker extends Entity {
 
-    public Worker(Vector2 pos) {
-        super(ArtManager.WORKER_ATLAS.findRegion("worker_f"),pos);
+    public Worker(World world, Vector2 pos) {
+        super(world, ArtManager.WORKER_ATLAS.findRegion("worker_f"),pos);
         this.atlas = (ArtManager.WORKER_ATLAS);
         this.region ="f";
         this.name = RandomNames.getInstance().getName();
@@ -19,7 +20,7 @@ public class Worker extends Entity {
     @Override
     public void update(float delta) {
         super.update(delta);
-
+        this.position.x += 50f*  delta * world.getTimeMultiplier();
         if (position.y > prevPosition.y)
             region = "b";
         else {

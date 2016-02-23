@@ -14,7 +14,7 @@ public class TooltipListener extends InputListener {
 
     private Vector2 position = new Vector2();
     private Vector2 tmp = new Vector2();
-    private Vector2 offset = new Vector2(10, 10);
+    private Vector2 offset = new Vector2(5, 5);
 
     public TooltipListener(Actor tooltip, boolean followCursor) {
         this.tooltip = tooltip;

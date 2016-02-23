@@ -2,10 +2,11 @@ package com.pantsareoffensive.lunchgistics.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.pantsareoffensive.lunchgistics.map.World;
 
 public abstract class Box extends GameObject implements IInventoryObject{
-    public Box(TextureRegion texture, Vector2 pos) {
-       super(texture,pos);
+    public Box(World world, TextureRegion texture, Vector2 pos) {
+       super(world, texture,pos);
     }
 
 

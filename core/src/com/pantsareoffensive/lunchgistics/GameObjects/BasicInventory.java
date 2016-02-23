@@ -3,12 +3,13 @@ package com.pantsareoffensive.lunchgistics.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.pantsareoffensive.lunchgistics.map.World;
 
 public class BasicInventory extends GameObject implements IStorage {
     protected GameObject[] inventory;
 
-    public BasicInventory(TextureRegion texture, Vector2 pos) {
-        super(texture, pos);
+    public BasicInventory(World world, TextureRegion texture, Vector2 pos) {
+        super(world,texture, pos);
     }
 
     @Override
