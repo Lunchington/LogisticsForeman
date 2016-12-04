@@ -2,9 +2,7 @@ package com.pantsareoffensive.lunchgistics;
 
 import com.badlogic.gdx.Game;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.pantsareoffensive.lunchgistics.managers.*;
 import com.pantsareoffensive.lunchgistics.utils.RandomNames;

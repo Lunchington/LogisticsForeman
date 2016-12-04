@@ -81,7 +81,7 @@ public abstract class GameObject {
     public void setSelected(boolean b) { this.selected = b; }
 
     public float getRight() { return getX() + getWidth(); }
-    public float getTop() { return getY() + getHeight(); }
+    public float getBottom() { return getY() + getHeight(); }
 
     public Vector2 getCenter() { return new Vector2(getX() + 16,getY() + 16); }
 
@@ -92,7 +92,7 @@ public abstract class GameObject {
     }
 
     public boolean isInBounds(Vector2 compare) {
-        return compare.x >= getX() && compare.x <= getRight() && compare.y >= getY() && compare.y <= getTop();
+        return compare.x >= getX() && compare.x <= getRight() && compare.y >= getY() && compare.y <= getBottom();
     }
 
     public String toString() {

@@ -1,6 +1,7 @@
 package com.pantsareoffensive.lunchgistics.map;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -41,17 +42,17 @@ public class World {
     }
 
     public void render(SpriteBatch batch) {
-        Camera camera = view.getCamera();
-        int startX = (int)(camera.position.x - camera.viewportWidth/2)/ 32;
+        OrthographicCamera camera = (OrthographicCamera) view.getCamera();
+        int startX = (int)(camera.position.x - camera.zoom *camera.viewportWidth/2)/ 32;
         if (startX < 0) startX = 0;
 
-        int startY = (int)(camera.position.y - camera.viewportHeight/2) / 32;
+        int startY = (int)(camera.position.y - camera.zoom *camera.viewportHeight/2) / 32;
         if (startY < 0) startY = 0;
 
-        int endX = (int)(camera.position.x + camera.viewportWidth/2) / 32 +2;
+        int endX = (int)(camera.position.x + camera.zoom * camera.viewportWidth/2) / 32 +2;
         if (endX > mapData.width) endX = mapData.width;
 
-        int endY = (int)(camera.position.y + camera.viewportHeight/2) / 32 + 2;
+        int endY = (int)(camera.position.y + camera.zoom * camera.viewportHeight/2) / 32 + 2;
         if (endY > mapData.height) endY = mapData.height;
 
 
@@ -62,7 +63,7 @@ public class World {
         }
 
         for (GameObject e : gameObjects) {
-           if(e.getX() >= startX*32 && e.getRight() <= endX*32 && e.getY() >= startY *32 && e.getTop() <= endY*32) {
+           if(e.getRight() >= startX*32 && e.getX() <= endX*32 && e.getBottom() >= startY *32 && e.getY() <= endY*32) {
                e.render(batch);
            }
         }

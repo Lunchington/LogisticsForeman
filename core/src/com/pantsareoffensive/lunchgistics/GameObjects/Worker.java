@@ -49,7 +49,7 @@ public class Worker extends Entity {
     @Override
     public void render(SpriteBatch batch) {
         super.render(batch);
-        font.draw(batch,name, getX() - name.length(),getTop() + 16);
+        font.draw(batch,name, getX() - name.length(),getBottom() + 16);
 
     }
 
